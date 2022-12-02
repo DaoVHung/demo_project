@@ -1,0 +1,293 @@
+  Link Css
+    <link rel="stylesheet" href="Css/ShopCss.css">
+
+
+
+BookSevlet?bookId=${book.bookId}&&action=update
+
+<%response.sendRedirect("ProductServlet");%>
+
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+========================================================================================================================
+BATABASE CODE:
+
+USE csdl_quanlynhahang;
+create table FOOD(
+    FoodID int primary key not null unique ,
+    CatalogID int not null,
+    FoodName nvarchar(20) not null unique ,
+    FoodPrice int not null ,
+    FoodTitle text not null ,
+    FoodStatus bit,
+        FOREIGN KEY (CatalogID) references Catalog(CatalogID)
+
+);
+create table DIRNK(
+    DrinksID int primary key not null unique ,
+    CatalogID int not null ,
+    DrinksName nvarchar(20) not null unique ,
+    DrinksPrice int not null ,
+    DrinksTitle text not null ,
+    DrinksStatus bit,
+    FOREIGN KEY (CatalogID) references Catalog(CatalogID)
+
+);
+create table TABLEs(
+    TableID int primary key not null unique ,
+    TableName nvarchar(20) not null unique ,
+    TableSeat int not null ,
+    TableStatus bit
+);
+create table BILL(
+    BillID int primary key not null unique ,
+    FoodID int not null unique ,
+    DrinksID int not null unique ,
+    TableID int not null unique ,
+    BillStatus bit,
+    BillPrice int,
+    CreateDate date,
+    FOREIGN KEY (FoodID) references FOOD(FoodID),
+    FOREIGN KEY (DrinksID) references DIRNK(DrinksID),
+    FOREIGN KEY (TableID) references TABLEs(TableID)
+);
+create table Catalog(
+  CatalogID int primary key not null,
+  CatalogName nvarchar(20) not null unique ,
+  Title text not null
+);
+create table User(
+  UserId int primary key not null auto_increment,
+  UserName varchar(30) unique not null ,
+  UserPassword varchar(30) unique not null ,
+  UserConfirm varchar(30) unique not null ,
+  UserFullName text not null ,
+  UserStatus bit default true,
+  UserPermission bit default false,
+  UserEmail text,
+  UserPhoneNumber varchar(10)
+);
+
+-- Procedure User --
+delimiter &&
+create procedure pr_GetAllUser()
+begin
+    select * from User;
+end &&;
+delimiter &&
+create procedure pr_InsertUser(IN iUsername varchar(30), IN iUserPass varchar(30),IN iUserConfirm varchar(30),
+ IN iUserFullName text,in iUserStatus bit, in iUserPermission bit,in iUserEmail text, In iUserPhoneNumber varchar(10))
+begin
+    insert into User
+        value(iUsername,iUserPass,iUserFullName,1,0,iUserEmail,iUserPhoneNumber);
+
+end &&
+delimiter &&
+create procedure pr_UpdateUser(In iUserID int, IN iUsername varchar(30), IN iUserPass varchar(30),IN iUserConfirm varchar(30),
+                               IN iUserFullName text,in iUserStatus bit, in iUserPermission bit,in iUserEmail text, In iUserPhoneNumber varchar(10))
+begin
+    update User
+    set
+        UserName = iUsername,
+        UserPassword = iUserPass,
+        UserConfirm = iUserConfirm,
+        UserFullName = iUserFullName,
+        UserStatus = iUserStatus,
+        UserPermission = 0,
+        UserEmail = iUserEmail,
+        UserPhoneNumber = iUserPhoneNumber
+
+    where UserID = iUserID;
+end &&
+delimiter &&
+create procedure pr_DeleteUser(IN iUserID int)
+begin
+    delete from User where UserID = iUserID;
+end &&
+delimiter &&
+create procedure pr_GetByIdUser(IN iUserID int)
+begin
+    select * from User where UserID = iUserID;
+end &&
+
+-- Procedure Food --
+delimiter &&
+create procedure pr_GetAllFood()
+begin
+    select * from FOOD;
+end &&;
+delimiter &&
+create procedure pr_InsertFood(IN iFoodID int, IN iCatalog int, IN IFoodName nvarchar(20), IN iFoodPrice int, In iFoodTitle text, in iFoodStatus bit)
+begin
+     insert into FOOD
+         value(iFoodID,iCatalog,IFoodName,iFoodPrice,iFoodTitle,iFoodStatus);
+
+end &&
+delimiter &&
+create procedure pr_UpdateFood(IN iFoodID int, IN iCatalog int, IN IFoodName nvarchar(20), IN iFoodPrice int, In iFoodTitle text, in iFoodStatus bit)
+begin
+    update FOOD
+        set
+            CatalogID = iCatalog,
+            FoodName = IFoodName,
+            FoodPrice = iFoodPrice,
+            FoodTitle = iFoodTitle,
+            FoodStatus = iFoodStatus
+    where FoodID = iFoodID;
+end &&
+delimiter &&
+create procedure pr_DeleteFood(IN iFoodID int)
+begin
+    delete from FOOD where FoodID = iFoodID;
+end &&
+delimiter &&
+create procedure pr_GetByIdFood(IN iFoodID int)
+begin
+    select * from FOOD where FoodID = iFoodID;
+end &&
+
+
+-- Procedure Drinks --
+delimiter &&
+create procedure pr_GetAllDrinks()
+begin
+    select * from DIRNK;
+end &&;
+delimiter &&
+create procedure pr_InsertDrinks(IN iDrinksID int, IN iCatalog int, IN IDrinksName nvarchar(20), IN iDrinksPrice int, In iDrinksTitle text, in iDrinksStatus bit)
+begin
+    insert into DIRNK
+        value(iDrinksID,iCatalog,IDrinksName,iDrinksPrice,iDrinksTitle,iDrinksStatus);
+end &&
+delimiter &&
+create procedure pr_UpdateDrinks(IN iDrinksID int, IN iCatalog int, IN IDrinksName nvarchar(20), IN iDrinksPrice int, In iDrinksTitle text, in iDrinksStatus bit)
+begin
+    update DIRNK
+    set
+        CatalogID = iCatalog,
+        DrinksName = IDrinksName,
+        DrinksPrice = iDrinksPrice,
+        DrinksTitle = iDrinksTitle,
+        DrinksStatus = iDrinksStatus
+    where DrinksID = iDrinksID;
+end &&
+delimiter &&
+create procedure pr_DeleteDrinks(IN iDrinksID int)
+begin
+    delete from DIRNK where DrinksID = iDrinksiD;
+end &&
+delimiter &&
+create procedure pr_GetByIdDrinks(IN iDrinksID int)
+begin
+    select * from DIRNK where DrinksID = iDrinksID;
+end &&
+
+
+-- Procedure Table --
+delimiter &&
+create procedure pr_GetAllTable()
+begin
+    select * from TABLEs;
+end &&;
+delimiter &&
+create procedure pr_InsertTable(IN iTableID int, IN ITableName nvarchar(20), IN iTableSeat int, in iTableStatus bit)
+begin
+    insert into TABLEs
+        value(iTableID,iTableName,iTableSeat,iTableStatus);
+
+end &&
+delimiter &&
+create procedure pr_UpdateTable(IN iTableID int, IN ITableName nvarchar(20), IN iTableSeat int, in iTableStatus bit)
+begin
+    update TABLEs
+    set
+        TableName = ITableName,
+        TableSeat = iTableSeat,
+        TableStatus = iTableStatus
+    where TableID = iTableID;
+end &&
+delimiter &&
+create procedure pr_DeleteTable(IN iTableID int)
+begin
+    delete from TABLEs where TableID = iTableID;
+end &&
+delimiter &&
+create procedure pr_GetByIdTable(IN iTableID int)
+begin
+    select * from TABLEs where TableID = iTableID;
+end &&
+
+
+
+-- Procedure Bill --
+delimiter &&
+create procedure pr_GetAllBILL()
+begin
+    select * from BILL;
+end &&;
+delimiter &&
+create procedure pr_InsertBILL(IN iBILLID int, IN iFoodID int, IN iDrinksID Int, IN iTabelID int, In iBillStatus bit, in iBillPrice int, In iCreateDate date)
+
+begin
+    insert into BILL
+        value(iBILLID,iFoodID,iDrinksID,iTabelID,iBillStatus,iBillPrice,iCreateDate);
+
+end &&
+delimiter &&
+create procedure pr_UpdateBILL(IN iBILLID int, IN iFoodID int, IN iDrinksID Int, IN iTabelID int, In iBillStatus bit, in iBillPrice int, In iCreateDate date)
+begin
+    update BILL
+    set
+        FoodID = iFoodID,
+        DrinksID  = iDrinksID,
+        TableID = iTabelID,
+        BillStatus = iBillStatus,
+        BillPrice = iBillPrice,
+        CreateDate = iCreateDate
+    where BillID = iBILLID;
+end &&
+delimiter &&
+create procedure pr_DeleteBILL(IN iBILLID int)
+begin
+    delete from BILL where BillID = iBILLID;
+end &&
+delimiter &&
+create procedure pr_GetByIdBILL(IN iBILLID int)
+begin
+    select * from BILL where BillID = iBILLID;
+end &&
+
+
+-- Procedure Catalog --
+delimiter &&
+create procedure pr_GetAllCatalog()
+begin
+    select * from Catalog;
+end &&;
+delimiter &&
+create procedure pr_InsertDrinks_Catalog(IN iCatalogID int, IN iCatalog nvarchar(20), IN ITitle text)
+begin
+    insert into Catalog
+        value(iCatalogID,iCatalog,ITitle);
+end &&
+delimiter &&
+create procedure pr_UpdateDrinks_Catalog(IN iCatalogID int, IN iCatalog nvarchar(20), IN ITitle text)
+begin
+    update Catalog
+    set
+        CatalogName = iCatalog,
+        Title = ITitle
+    where CatalogID  = iCatalogID;
+end &&
+delimiter &&
+create procedure pr_DeleteCatalog(IN iCatalogID int)
+begin
+    delete from Catalog where CatalogID  = iCatalogID;
+end &&
+delimiter &&
+create procedure pr_GetByIdCatalog(IN iCatalogID int)
+begin
+    select * from Catalog where CatalogID  = iCatalogID;
+end &&
+

@@ -1,0 +1,1 @@
+package ra.Model.DaoImp;public class starDaoImp {}

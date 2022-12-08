@@ -5,8 +5,10 @@ import ra.Model.Entity.Table;
 import java.util.List;
 
 public interface TableService<T,V> extends ManageService<T,V> {
-    boolean delete(Integer id);
+    List<T> searchTableConfirm(String name);
 
+    boolean delete(Integer id);
+    List<Table> getAllConfirm();
     Table getById(Integer id);
 
     List<T> searchProByName(String name);

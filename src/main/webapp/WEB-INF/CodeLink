@@ -1,293 +1,197 @@
-  Link Css
-    <link rel="stylesheet" href="Css/ShopCss.css">
+<html lang="en">
+
+<head>
+    <title>Login Gent Steak</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap"
+          rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,800">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/View/User/css/open-iconic-bootstrap.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/View/User/css/animate.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/View/User/css/owl.carousel.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/View/User/css/owl.theme.default.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/View/User/css/magnific-popup.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/View/User/css/aos.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/View/User/css/ionicons.min.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/View/User/css/bootstrap-datepicker.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/View/User/css/jquery.timepicker.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/View/User/css/flaticon.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/View/User/css/icomoon.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/View/User/css/style.css">
+    <link rel="stylesheet" href="<%=request.getContextPath()%>/View/User/css/Login.css">
+    <style>
+        .py-1 {
+            background-color: black;
+        }
+
+        .bg-primary {
+            background-color: black;
+        }
+
+        img {
+            position: absolute;
+            max-width: 100%;
+
+        }
+        .csw-btn-button {
+            cursor: pointer;
+            font-size: 16px;
+            padding: 10px 35px;
+            color: #ffffff !important;
+            border-radius: 5px;
+            background: #9B6A1D;
+            border: 1px solid #9B6A1D;
+            transition: 0.4s;
+        }
+        .csw-btn-button:hover {
+            background: #292929;
+        }
+        input[type=submit] {
+            width: 150px;
+            height: 50px;
+            border-radius: 20px;
+            border: 1px solid #FF4B2B;
+            background-color: #FF4B2B;
+            color: #FFFFFF;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 12px 45px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: transform 80ms ease-in;
+
+        }
+
+    </style>
+</head>
+<img src="<%=request.getContextPath()%>/View/User/images/Fotoram.io (2).jpg" alt="">
+<div class="container" id="container">
+    <div class="form-container sign-up-container">
+        <form action="<%=request.getContextPath()%>/UserServlet" method="post">
+            <h3>Create Account</h3>
+            <input type="text" name="fullName" placeholder="Full name"/>
+            <input type="text" name="userName" placeholder="Username">
+            <input type="password" name="passwords" placeholder="Password"/>
+            <input type="password" name="confrimPass" placeholder="Confirm Password">
+            <input type="email" name="email" placeholder="Email"/>
+            <input type="text" name="phoneNumber" placeholder="Phone number">
+            <input type="text" name="address" placeholder="address">
+            <input type="submit" value="Create" name="action">
+        </form>
+    </div>
+    <div class="form-container sign-in-container">
+
+        <form action="<%=request.getContextPath()%>/UserServlet" method="get">
+            <h1>Sign in</h1>
+            <span>or use your account</span>
+            <input type="username" name="username" placeholder="UserName"/>
+            <input type="password" name="passwords" placeholder="Passwords"/>
+            ${wrong}
+            ${success}
+            <input type="submit" value="Login" name="action">
+            <a href="<%=request.getContextPath()%>/ProductServlet?action=GetAll">Visit the site without an account</a>
+        </form>
+    </div>
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-left">
+                <h1>Welcome Back!</h1>
+                <p>To keep connected with us please login with your personal info</p>
+                <button class="ghost" id="signIn">Sign In</button>
+                <a href="index.html">Visit the site without an account</a>
+            </div>
+            <div class="overlay-panel overlay-right">
+                <h1>Hello, Friend!</h1>
+                <p>Enter your personal details and start journey with us</p>
+                <button class="ghost" id="signUp">Sign Up</button>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 
-
-BookSevlet?bookId=${book.bookId}&&action=update
-
-<%response.sendRedirect("ProductServlet");%>
-
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
-========================================================================================================================
-BATABASE CODE:
-
-USE csdl_quanlynhahang;
-create table FOOD(
-    FoodID int primary key not null unique ,
-    CatalogID int not null,
-    FoodName nvarchar(20) not null unique ,
-    FoodPrice int not null ,
-    FoodTitle text not null ,
-    FoodStatus bit,
-        FOREIGN KEY (CatalogID) references Catalog(CatalogID)
-
-);
-create table DIRNK(
-    DrinksID int primary key not null unique ,
-    CatalogID int not null ,
-    DrinksName nvarchar(20) not null unique ,
-    DrinksPrice int not null ,
-    DrinksTitle text not null ,
-    DrinksStatus bit,
-    FOREIGN KEY (CatalogID) references Catalog(CatalogID)
-
-);
-create table TABLEs(
-    TableID int primary key not null unique ,
-    TableName nvarchar(20) not null unique ,
-    TableSeat int not null ,
-    TableStatus bit
-);
-create table BILL(
-    BillID int primary key not null unique ,
-    FoodID int not null unique ,
-    DrinksID int not null unique ,
-    TableID int not null unique ,
-    BillStatus bit,
-    BillPrice int,
-    CreateDate date,
-    FOREIGN KEY (FoodID) references FOOD(FoodID),
-    FOREIGN KEY (DrinksID) references DIRNK(DrinksID),
-    FOREIGN KEY (TableID) references TABLEs(TableID)
-);
-create table Catalog(
-  CatalogID int primary key not null,
-  CatalogName nvarchar(20) not null unique ,
-  Title text not null
-);
-create table User(
-  UserId int primary key not null auto_increment,
-  UserName varchar(30) unique not null ,
-  UserPassword varchar(30) unique not null ,
-  UserConfirm varchar(30) unique not null ,
-  UserFullName text not null ,
-  UserStatus bit default true,
-  UserPermission bit default false,
-  UserEmail text,
-  UserPhoneNumber varchar(10)
-);
-
--- Procedure User --
-delimiter &&
-create procedure pr_GetAllUser()
-begin
-    select * from User;
-end &&;
-delimiter &&
-create procedure pr_InsertUser(IN iUsername varchar(30), IN iUserPass varchar(30),IN iUserConfirm varchar(30),
- IN iUserFullName text,in iUserStatus bit, in iUserPermission bit,in iUserEmail text, In iUserPhoneNumber varchar(10))
-begin
-    insert into User
-        value(iUsername,iUserPass,iUserFullName,1,0,iUserEmail,iUserPhoneNumber);
-
-end &&
-delimiter &&
-create procedure pr_UpdateUser(In iUserID int, IN iUsername varchar(30), IN iUserPass varchar(30),IN iUserConfirm varchar(30),
-                               IN iUserFullName text,in iUserStatus bit, in iUserPermission bit,in iUserEmail text, In iUserPhoneNumber varchar(10))
-begin
-    update User
-    set
-        UserName = iUsername,
-        UserPassword = iUserPass,
-        UserConfirm = iUserConfirm,
-        UserFullName = iUserFullName,
-        UserStatus = iUserStatus,
-        UserPermission = 0,
-        UserEmail = iUserEmail,
-        UserPhoneNumber = iUserPhoneNumber
-
-    where UserID = iUserID;
-end &&
-delimiter &&
-create procedure pr_DeleteUser(IN iUserID int)
-begin
-    delete from User where UserID = iUserID;
-end &&
-delimiter &&
-create procedure pr_GetByIdUser(IN iUserID int)
-begin
-    select * from User where UserID = iUserID;
-end &&
-
--- Procedure Food --
-delimiter &&
-create procedure pr_GetAllFood()
-begin
-    select * from FOOD;
-end &&;
-delimiter &&
-create procedure pr_InsertFood(IN iFoodID int, IN iCatalog int, IN IFoodName nvarchar(20), IN iFoodPrice int, In iFoodTitle text, in iFoodStatus bit)
-begin
-     insert into FOOD
-         value(iFoodID,iCatalog,IFoodName,iFoodPrice,iFoodTitle,iFoodStatus);
-
-end &&
-delimiter &&
-create procedure pr_UpdateFood(IN iFoodID int, IN iCatalog int, IN IFoodName nvarchar(20), IN iFoodPrice int, In iFoodTitle text, in iFoodStatus bit)
-begin
-    update FOOD
-        set
-            CatalogID = iCatalog,
-            FoodName = IFoodName,
-            FoodPrice = iFoodPrice,
-            FoodTitle = iFoodTitle,
-            FoodStatus = iFoodStatus
-    where FoodID = iFoodID;
-end &&
-delimiter &&
-create procedure pr_DeleteFood(IN iFoodID int)
-begin
-    delete from FOOD where FoodID = iFoodID;
-end &&
-delimiter &&
-create procedure pr_GetByIdFood(IN iFoodID int)
-begin
-    select * from FOOD where FoodID = iFoodID;
-end &&
+<!-- loader -->
+<div id="ftco-loader" class="show fullscreen">
+    <svg class="circular" width="48px" height="48px">
+        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/>
+        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10"
+                stroke="#F96D00"/>
+    </svg>
+</div>
 
 
--- Procedure Drinks --
-delimiter &&
-create procedure pr_GetAllDrinks()
-begin
-    select * from DIRNK;
-end &&;
-delimiter &&
-create procedure pr_InsertDrinks(IN iDrinksID int, IN iCatalog int, IN IDrinksName nvarchar(20), IN iDrinksPrice int, In iDrinksTitle text, in iDrinksStatus bit)
-begin
-    insert into DIRNK
-        value(iDrinksID,iCatalog,IDrinksName,iDrinksPrice,iDrinksTitle,iDrinksStatus);
-end &&
-delimiter &&
-create procedure pr_UpdateDrinks(IN iDrinksID int, IN iCatalog int, IN IDrinksName nvarchar(20), IN iDrinksPrice int, In iDrinksTitle text, in iDrinksStatus bit)
-begin
-    update DIRNK
-    set
-        CatalogID = iCatalog,
-        DrinksName = IDrinksName,
-        DrinksPrice = iDrinksPrice,
-        DrinksTitle = iDrinksTitle,
-        DrinksStatus = iDrinksStatus
-    where DrinksID = iDrinksID;
-end &&
-delimiter &&
-create procedure pr_DeleteDrinks(IN iDrinksID int)
-begin
-    delete from DIRNK where DrinksID = iDrinksiD;
-end &&
-delimiter &&
-create procedure pr_GetByIdDrinks(IN iDrinksID int)
-begin
-    select * from DIRNK where DrinksID = iDrinksID;
-end &&
+<script src="<%=request.getContextPath()%>/View/User/js/jquery.min.js"></script>
+<script src="<%=request.getContextPath()%>/View/User/js/jquery-migrate-3.0.1.min.js"></script>
+<script src="<%=request.getContextPath()%>/View/User/js/popper.min.js"></script>
+<script src="<%=request.getContextPath()%>/View/User/js/bootstrap.min.js"></script>
+<script src="<%=request.getContextPath()%>/View/User/js/jquery.easing.1.3.js"></script>
+<script src="<%=request.getContextPath()%>/View/User/js/jquery.waypoints.min.js"></script>
+<script src="<%=request.getContextPath()%>/View/User/js/jquery.stellar.min.js"></script>
+<script src="<%=request.getContextPath()%>/View/User/js/owl.carousel.min.js"></script>
+<script src="<%=request.getContextPath()%>/View/User/js/jquery.magnific-popup.min.js"></script>
+<script src="<%=request.getContextPath()%>/View/User/js/aos.js"></script>
+<script src="<%=request.getContextPath()%>/View/User/js/jquery.animateNumber.min.js"></script>
+<script src="<%=request.getContextPath()%>/View/User/js/bootstrap-datepicker.js"></script>
+<script src="<%=request.getContextPath()%>/View/User/js/scrollax.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+<script src="<%=request.getContextPath()%>/View/User/js/google-map.js"></script>
+<script src="<%=request.getContextPath()%>/View/User/js/main.js"></script>
+
+<script>
+    $(document).ready(function () {
+
+        var quantitiy = 0;
+        $('.quantity-right-plus').click(function (e) {
+
+            // Stop acting like a button
+            e.preventDefault();
+            // Get the field name
+            var quantity = parseInt($('#quantity').val());
+
+            // If is not undefined
+
+            $('#quantity').val(quantity + 1);
 
 
--- Procedure Table --
-delimiter &&
-create procedure pr_GetAllTable()
-begin
-    select * from TABLEs;
-end &&;
-delimiter &&
-create procedure pr_InsertTable(IN iTableID int, IN ITableName nvarchar(20), IN iTableSeat int, in iTableStatus bit)
-begin
-    insert into TABLEs
-        value(iTableID,iTableName,iTableSeat,iTableStatus);
+            // Increment
 
-end &&
-delimiter &&
-create procedure pr_UpdateTable(IN iTableID int, IN ITableName nvarchar(20), IN iTableSeat int, in iTableStatus bit)
-begin
-    update TABLEs
-    set
-        TableName = ITableName,
-        TableSeat = iTableSeat,
-        TableStatus = iTableStatus
-    where TableID = iTableID;
-end &&
-delimiter &&
-create procedure pr_DeleteTable(IN iTableID int)
-begin
-    delete from TABLEs where TableID = iTableID;
-end &&
-delimiter &&
-create procedure pr_GetByIdTable(IN iTableID int)
-begin
-    select * from TABLEs where TableID = iTableID;
-end &&
+        });
 
+        $('.quantity-left-minus').click(function (e) {
+            // Stop acting like a button
+            e.preventDefault();
+            // Get the field name
+            var quantity = parseInt($('#quantity').val());
 
+            // If is not undefined
 
--- Procedure Bill --
-delimiter &&
-create procedure pr_GetAllBILL()
-begin
-    select * from BILL;
-end &&;
-delimiter &&
-create procedure pr_InsertBILL(IN iBILLID int, IN iFoodID int, IN iDrinksID Int, IN iTabelID int, In iBillStatus bit, in iBillPrice int, In iCreateDate date)
+            // Increment
+            if (quantity > 0) {
+                $('#quantity').val(quantity - 1);
+            }
+        });
 
-begin
-    insert into BILL
-        value(iBILLID,iFoodID,iDrinksID,iTabelID,iBillStatus,iBillPrice,iCreateDate);
+    });
+</script>
 
-end &&
-delimiter &&
-create procedure pr_UpdateBILL(IN iBILLID int, IN iFoodID int, IN iDrinksID Int, IN iTabelID int, In iBillStatus bit, in iBillPrice int, In iCreateDate date)
-begin
-    update BILL
-    set
-        FoodID = iFoodID,
-        DrinksID  = iDrinksID,
-        TableID = iTabelID,
-        BillStatus = iBillStatus,
-        BillPrice = iBillPrice,
-        CreateDate = iCreateDate
-    where BillID = iBILLID;
-end &&
-delimiter &&
-create procedure pr_DeleteBILL(IN iBILLID int)
-begin
-    delete from BILL where BillID = iBILLID;
-end &&
-delimiter &&
-create procedure pr_GetByIdBILL(IN iBILLID int)
-begin
-    select * from BILL where BillID = iBILLID;
-end &&
+<script>
+    const signUpButton = document.getElementById('signUp');
+    const signInButton = document.getElementById('signIn');
+    const container = document.getElementById('container');
 
+    signUpButton.addEventListener('click', () => {
+        container.classList.add('right-panel-active');
+    });
 
--- Procedure Catalog --
-delimiter &&
-create procedure pr_GetAllCatalog()
-begin
-    select * from Catalog;
-end &&;
-delimiter &&
-create procedure pr_InsertDrinks_Catalog(IN iCatalogID int, IN iCatalog nvarchar(20), IN ITitle text)
-begin
-    insert into Catalog
-        value(iCatalogID,iCatalog,ITitle);
-end &&
-delimiter &&
-create procedure pr_UpdateDrinks_Catalog(IN iCatalogID int, IN iCatalog nvarchar(20), IN ITitle text)
-begin
-    update Catalog
-    set
-        CatalogName = iCatalog,
-        Title = ITitle
-    where CatalogID  = iCatalogID;
-end &&
-delimiter &&
-create procedure pr_DeleteCatalog(IN iCatalogID int)
-begin
-    delete from Catalog where CatalogID  = iCatalogID;
-end &&
-delimiter &&
-create procedure pr_GetByIdCatalog(IN iCatalogID int)
-begin
-    select * from Catalog where CatalogID  = iCatalogID;
-end &&
+    signInButton.addEventListener('click', () => {
+        container.classList.remove('right-panel-active');
+    });
+</script>
 
+</body>
+
+</html>

@@ -1,1 +1,1 @@
-package ra.Model.Dao;public interface starDao {}
+package ra.Model.Dao;import ra.Model.Entity.Star;import java.sql.SQLException;import java.util.List;public interface StarDao<T,V> extends ManagementDao<T,V> {    List<T> searchBillByName(String name) throws SQLException;    List<T> searchProductByName(String name);    List<T> searchByconfirm(String name);    List<Star> getAllConfirm();    boolean delete(Integer id);    Star getById(Integer id);    public Integer getbyID(Integer id);}

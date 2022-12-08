@@ -1,1 +1,1 @@
-package ra.Model.Service;public interface ContactService {}
+package ra.Model.Service;import ra.Model.Entity.Contact;public interface ContactService<T,V> extends ManageService<T,V> {    Contact getById(Integer id);}

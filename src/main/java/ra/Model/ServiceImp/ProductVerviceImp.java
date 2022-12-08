@@ -3,11 +3,11 @@ package ra.Model.ServiceImp;
 import ra.Model.Dao.ProductDao;
 import ra.Model.DaoImp.ProductDaoImp;
 import ra.Model.Entity.Product;
-import ra.Model.Service.DrinksService;
+import ra.Model.Service.ProductService;
 
 import java.util.List;
 
-public class DrinksVerviceImp implements DrinksService<Product, String> {
+public class ProductVerviceImp implements ProductService<Product, String> {
     private ProductDao<Product,String> productDao = new ProductDaoImp();
     @Override
     public boolean delete(Integer id) {
@@ -37,6 +37,29 @@ public class DrinksVerviceImp implements DrinksService<Product, String> {
     @Override
     public List<Product> getAll() {
         return productDao.getAll();
+    }
+    public List<Product> getAllMainFood() {
+        return productDao.getAllMainFood();
+    }
+
+    @Override
+    public List<Product> getAllDrinks() {
+        return productDao.getAllDrinks();
+    }
+
+    @Override
+    public List<Product> getAllDesserts() {
+        return productDao.getAllDesserts();
+    }
+
+    @Override
+    public List<Product> getAllSalad() {
+        return productDao.getAllSalad();
+    }
+
+    @Override
+    public List<Product> getProductByUserID(Integer id) {
+        return productDao.getProductByUserID(id);
     }
 
     @Override

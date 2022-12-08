@@ -1,34 +1,101 @@
 package ra.Model.DaoImp;
 
-import ra.Model.Dao.BillDao;
+import ra.Model.Dao.OrderDao;
 import ra.Model.Entity.Order;
+import ra.Model.Entity.OrderDetail;
 import ra.Model.Util.ConnectionDataBase;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BillDaoImp implements BillDao<Order, String> {
+public class OrderDaoImp implements OrderDao<Order, String> {
 
     @Override
     public List<Order> searchBillByName(String name) throws SQLException {
+        return null;
+    }
+
+    public Integer getEarning() {
+        Connection conn = null;
+        CallableStatement callSt = null;
+        Integer earning = null;
+        try {
+            conn = ConnectionDataBase.openConnection();
+            callSt = conn.prepareCall("{call getEarning(?)}");
+            callSt.registerOutParameter(1, Types.INTEGER);
+            callSt.execute();
+            earning = callSt.getInt(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionDataBase.closeConnection(conn, callSt);
+        }
+        return earning;
+    }
+
+    @Override
+    public List<Order> searchProductByName(String name) {
         Connection conn = null;
         CallableStatement callSt = null;
         List<Order> orderList = null;
-        conn = ConnectionDataBase.openConnection();
-        callSt = conn.prepareCall("");
-        ResultSet rs = callSt.executeQuery();
-        orderList = new ArrayList<>();
-        while (rs.next()) {
-            Order order = new Order();
-            order.setBillID(rs.getInt("BillID"));
-            order.setFoodID(rs.getInt("FoodID"));
-            order.setDrinksID(rs.getInt("DinksID"));
-            order.setTableID(rs.getInt("TableID"));
-            order.setBillStatus(rs.getBoolean("BillStatus"));
-            order.setPrice(rs.getInt("BillPrice"));
-            order.setCreated(rs.getDate("CreateDate"));
-            orderList.add(order);
+        try {
+            conn = ConnectionDataBase.openConnection();
+            callSt = conn.prepareCall("{call 5pr_SearchByUserName(?)}");
+            callSt.setString(1, name);
+            ResultSet rs = callSt.executeQuery();
+            orderList = new ArrayList<>();
+            while (rs.next()) {
+                Order order = new Order();
+                order.setOrderID(rs.getInt("OrderID"));
+                order.setUserID(rs.getInt("UserId"));
+                order.setDate(rs.getDate("OrderDate").toLocalDate());
+                order.setTotalAmount(rs.getInt("TotalAmount"));
+                order.setNote(rs.getString("Note"));
+                order.setFullName(rs.getString("FullName"));
+                order.setAddress(rs.getString("Address"));
+                order.setPhoneNumber(rs.getInt("PhoneNumber"));
+                order.setEmail(rs.getString("Email"));
+                order.setOrderStatus(rs.getBoolean("OrderStatus"));
+                orderList.add(order);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionDataBase.closeConnection(conn, callSt);
+        }
+        return orderList;
+    }
+
+    @Override
+    public List<Order> searchConfirm(String name) {
+        Connection conn = null;
+        CallableStatement callSt = null;
+        List<Order> orderList = null;
+        try {
+            conn = ConnectionDataBase.openConnection();
+            callSt = conn.prepareCall("{call 5pr_SearchConfirm(?)}");
+            callSt.setString(1, name);
+            ResultSet rs = callSt.executeQuery();
+            orderList = new ArrayList<>();
+            while (rs.next()) {
+                Order order = new Order();
+                order.setOrderID(rs.getInt("OrderID"));
+                order.setUserID(rs.getInt("UserId"));
+                order.setDate(rs.getDate("OrderDate").toLocalDate());
+                order.setTotalAmount(rs.getInt("TotalAmount"));
+                order.setNote(rs.getString("Note"));
+                order.setFullName(rs.getString("FullName"));
+                order.setAddress(rs.getString("Address"));
+                order.setPhoneNumber(rs.getInt("PhoneNumber"));
+                order.setEmail(rs.getString("Email"));
+                order.setOrderStatus(rs.getBoolean("OrderStatus"));
+                orderList.add(order);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionDataBase.closeConnection(conn, callSt);
         }
         return orderList;
     }
@@ -40,7 +107,7 @@ public class BillDaoImp implements BillDao<Order, String> {
         boolean result = true;
         try {
             conn = ConnectionDataBase.openConnection();
-            callSt = conn.prepareCall("{call pr_DeleteBILL(?)}");
+            callSt = conn.prepareCall("{call 5pr_DeleteOrder(?)}");
             callSt.setInt(1, id);
             callSt.executeUpdate();
         } catch (Exception e) {
@@ -56,28 +123,63 @@ public class BillDaoImp implements BillDao<Order, String> {
     public Order getById(Integer id) {
         Connection conn = null;
         CallableStatement callSt = null;
-        Order orderInfo = null;
+        Order order = null;
         try {
             conn = ConnectionDataBase.openConnection();
-            callSt = conn.prepareCall("{call pr_GetByIdBILL(?)}");
+            callSt = conn.prepareCall("{call 5pr_GetByIdOrder(?)}");
             callSt.setInt(1, id);
             ResultSet rs = callSt.executeQuery();
-            orderInfo = new Order();
+            order = new Order();
             if (rs.next()) {
-                orderInfo.setBillID(rs.getInt("BillID"));
-                orderInfo.setFoodID(rs.getInt("FoodID"));
-                orderInfo.setDrinksID(rs.getInt("DinksID"));
-                orderInfo.setTableID(rs.getInt("TableID"));
-                orderInfo.setBillStatus(rs.getBoolean("BillStatus"));
-                orderInfo.setPrice(rs.getInt("BillPrice"));
-                orderInfo.setCreated(rs.getDate("CreateDate"));
+                order.setOrderID(rs.getInt("OrderID"));
+                order.setUserID(rs.getInt("UserId"));
+                order.setDate(rs.getDate("OrderDate").toLocalDate());
+                order.setTotalAmount(rs.getInt("TotalAmount"));
+                order.setNote(rs.getString("Note"));
+                order.setFullName(rs.getString("FullName"));
+                order.setAddress(rs.getString("Address"));
+                order.setPhoneNumber(rs.getInt("PhoneNumber"));
+                order.setEmail(rs.getString("Email"));
+                order.setOrderStatus(rs.getBoolean("OrderStatus"));
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             ConnectionDataBase.closeConnection(conn, callSt);
         }
-        return orderInfo;
+        return order;
+    }
+
+    @Override
+    public List<Order> getConfrim() {
+        Connection conn = null;
+        CallableStatement callSt = null;
+        List<Order> orderList = null;
+        try {
+            conn = ConnectionDataBase.openConnection();
+            callSt = conn.prepareCall("{call 5pr_GetAllOrdersConfrim()}");
+            ResultSet rs = callSt.executeQuery();
+            orderList = new ArrayList<>();
+            while (rs.next()) {
+                Order order = new Order();
+                order.setOrderID(rs.getInt("OrderID"));
+                order.setUserID(rs.getInt("UserId"));
+                order.setDate(rs.getDate("OrderDate").toLocalDate());
+                order.setTotalAmount(rs.getInt("TotalAmount"));
+                order.setNote(rs.getString("Note"));
+                order.setFullName(rs.getString("FullName"));
+                order.setAddress(rs.getString("Address"));
+                order.setPhoneNumber(rs.getInt("PhoneNumber"));
+                order.setEmail(rs.getString("Email"));
+                order.setOrderStatus(rs.getBoolean("OrderStatus"));
+                orderList.add(order);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionDataBase.closeConnection(conn, callSt);
+        }
+        return orderList;
     }
 
     @Override
@@ -87,18 +189,21 @@ public class BillDaoImp implements BillDao<Order, String> {
         List<Order> orderList = null;
         try {
             conn = ConnectionDataBase.openConnection();
-            callSt = conn.prepareCall("{call pr_GetAllBILL()}");
+            callSt = conn.prepareCall("{call 5pr_GetAllOrders()}");
             ResultSet rs = callSt.executeQuery();
             orderList = new ArrayList<>();
             while (rs.next()) {
                 Order order = new Order();
-                order.setBillID(rs.getInt("BillID"));
-                order.setFoodID(rs.getInt("FoodID"));
-                order.setDrinksID(rs.getInt("DinksID"));
-                order.setTableID(rs.getInt("TableID"));
-                order.setBillStatus(rs.getBoolean("BillStatus"));
-                order.setPrice(rs.getInt("BillPrice"));
-                order.setCreated(rs.getDate("CreateDate"));
+                order.setOrderID(rs.getInt("OrderID"));
+                order.setUserID(rs.getInt("UserId"));
+                order.setDate(rs.getDate("OrderDate").toLocalDate());
+                order.setTotalAmount(rs.getInt("TotalAmount"));
+                order.setNote(rs.getString("Note"));
+                order.setFullName(rs.getString("FullName"));
+                order.setAddress(rs.getString("Address"));
+                order.setPhoneNumber(rs.getInt("PhoneNumber"));
+                order.setEmail(rs.getString("Email"));
+                order.setOrderStatus(rs.getBoolean("OrderStatus"));
                 orderList.add(order);
             }
         } catch (Exception e) {
@@ -116,15 +221,30 @@ public class BillDaoImp implements BillDao<Order, String> {
         boolean result = true;
         try {
             conn = ConnectionDataBase.openConnection();
-            callSt = conn.prepareCall("{call pr_InsertBILL(?,?,?,?,?,?,?)}");
-            callSt.setInt(1, order.getBillID());
-            callSt.setInt(2, order.getFoodID());
-            callSt.setInt(3, order.getDrinksID());
-            callSt.setInt(4, order.getTableID());
-            callSt.setBoolean(5, order.isBillStatus());
-            callSt.setInt(6, order.getPrice());
-            callSt.setDate(7, new Date(order.getCreated().getTime()));
+            callSt = conn.prepareCall("{call 5pr_InsertOrder(?,?,?,?,?,?,?,?,?)}");
+            callSt.setInt(1, order.getUserID());
+            callSt.setDate(2, Date.valueOf(order.getDate()));
+            callSt.setInt(3, order.getTotalAmount());
+            callSt.setString(4, order.getNote());
+            callSt.setString(5, order.getFullName());
+            callSt.setString(6, order.getAddress());
+            callSt.setInt(7, order.getPhoneNumber());
+            callSt.setString(8, order.getEmail());
+            callSt.registerOutParameter(9, Types.INTEGER);
             callSt.execute();
+            int orderId = callSt.getInt(9);
+            //Them du lieu cho bang OrderDetail
+            for (OrderDetail od : order.getListOrderDetail()) {
+                CallableStatement callSt2 = conn.prepareCall("{call 4pr_InsertOrderDetail(?,?,?,?,?)}");
+                callSt2.setInt(1, od.getProductID());
+                callSt2.setInt(2, orderId);
+                callSt2.setInt(3, od.getQuantity());
+                callSt2.setInt(4, od.getPrice() * od.getQuantity());
+                callSt2.setInt(5, od.getPrice());
+                callSt2.execute();
+                callSt2.close();
+            }
+
         } catch (Exception e) {
             result = false;
             e.printStackTrace();
@@ -141,19 +261,14 @@ public class BillDaoImp implements BillDao<Order, String> {
         boolean result = true;
         try {
             conn = ConnectionDataBase.openConnection();
-            callSt = conn.prepareCall("{call pr_UpdateBILL(?,?,?,?,?,?,?)}");
-            callSt.setInt(1, order.getBillID());
-            callSt.setInt(2, order.getFoodID());
-            callSt.setInt(3, order.getDrinksID());
-            callSt.setInt(4, order.getTableID());
-            callSt.setBoolean(5, order.isBillStatus());
-            callSt.setInt(6, order.getPrice());
-            callSt.setDate(7, new Date(order.getCreated().getTime()));
+            callSt = conn.prepareCall("{call 5pr_UpdateOrder(?,?)}");
+            callSt.setInt(1, order.getOrderID());
+            callSt.setBoolean(2, order.isOrderStatus());
             callSt.executeUpdate();
-        }catch (Exception e){
+        } catch (Exception e) {
             result = false;
             e.printStackTrace();
-        }finally {
+        } finally {
             ConnectionDataBase.closeConnection(conn, callSt);
         }
         return result;

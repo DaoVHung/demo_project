@@ -53,24 +53,31 @@ public class TableServlet extends HttpServlet {
             HttpSession session = request.getSession();
             List<Cart> listCart = (List<Cart>) session.getAttribute("listCart");
             Integer UserID = (Integer) session.getAttribute("UserID");
-            Table table = new Table();
-            table.setUserID(UserID);
-            table.setUserName(request.getParameter("fullName"));
-            table.setEmail(request.getParameter("email"));
-            table.setPhoneNumber(Integer.parseInt(request.getParameter("phoneNumber")));
-            table.setPeople(Integer.parseInt(request.getParameter("people")));
-            table.setDate(LocalDate.parse(request.getParameter("date")));
-            table.setTime(LocalTime.parse(request.getParameter("time")));
-            table.setSubject(request.getParameter("subject"));
-            table.setMessege(request.getParameter("message"));
-            boolean result = tableService.save(table);
-            if (result) {
-                request.getRequestDispatcher("View/User/alertMessage.jsp").forward(request, response);
+            if (UserID == null) {
+                String Notify = "Vui lòng đăng nhập để sử dụng dịch vụ !";
+                request.getSession().setAttribute("Notify", Notify);
+                request.getRequestDispatcher("View/User/Booking.jsp").forward(request, response);
+            }else {
+                Table table = new Table();
+                table.setUserID(UserID);
+                table.setUserName(request.getParameter("fullName"));
+                table.setEmail(request.getParameter("email"));
+                table.setPhoneNumber(Integer.parseInt(request.getParameter("phoneNumber")));
+                table.setPeople(Integer.parseInt(request.getParameter("people")));
+                table.setDate(LocalDate.parse(request.getParameter("date")));
+                table.setTime(LocalTime.parse(request.getParameter("time")));
+                table.setSubject(request.getParameter("subject"));
+                table.setMessege(request.getParameter("message"));
+                boolean result = tableService.save(table);
+                if (result) {
+                    request.getRequestDispatcher("View/User/alertMessage.jsp").forward(request, response);
 
-            } else {
-                request.getRequestDispatcher("View/Admin/Error/error.jsp").forward(request, response);
+                } else {
+                    request.getRequestDispatcher("View/Admin/Error/error.jsp").forward(request, response);
 
+                }
             }
+
         } else if (action != null && action.equals("Search")) {
             String name = request.getParameter("search");
             List<Table> tableList = tableService.searchProByName(name);

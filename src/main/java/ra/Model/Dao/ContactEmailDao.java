@@ -1,1 +1,1 @@
-package ra.Model.Dao;public class ContactEmaildao {}
+package ra.Model.Dao;public interface ContactEmailDao<T,V> extends ManagementDao<T,V> {}

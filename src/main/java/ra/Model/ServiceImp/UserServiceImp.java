@@ -1,33 +1,41 @@
 package ra.Model.ServiceImp;
 
+import ra.Model.Dao.ProductDao;
+import ra.Model.Dao.UserDao;
+import ra.Model.DaoImp.ProductDaoImp;
+import ra.Model.DaoImp.UserDaoImp;
+import ra.Model.Entity.Product;
 import ra.Model.Entity.User;
+import ra.Model.Service.UserService;
 
 import java.util.List;
 
-public class UserServiceImp implements ra.Model.Service.UserServiceImp {
+public class UserServiceImp implements UserService<User,String> {
+    private UserDao<User,String> userDaoImp = new UserDaoImp();
+
     @Override
-    public List getAll() {
-        return null;
+    public List<User> getAll() {
+        return userDaoImp.getAll();
     }
 
     @Override
-    public boolean save(Object o) {
+    public boolean save(User user) {
+        return userDaoImp.create(user);
+    }
+
+    @Override
+    public boolean update(User user) {
+        return userDaoImp.update(user);
+    }
+
+    @Override
+    public boolean delete(String id) {
         return false;
     }
 
     @Override
-    public boolean update(Object o) {
-        return false;
-    }
-
-    @Override
-    public boolean delete(Object id) {
-        return false;
-    }
-
-    @Override
-    public Object getById(Object id) {
-        return null;
+    public User getById(String id) {
+        return userDaoImp.getById(id);
     }
 
     @Override
@@ -37,21 +45,36 @@ public class UserServiceImp implements ra.Model.Service.UserServiceImp {
 
     @Override
     public User getById(Integer id) {
+        return userDaoImp.getById(id);
+    }
+
+    @Override
+    public boolean matchAcc(String UserName, String Pass) {
+        return userDaoImp.matchAcc(UserName,Pass);
+    }
+
+    @Override
+    public boolean matchAccAdmin(String UserName, String Pass) {
+        return userDaoImp.matchAccAdmin(UserName,Pass);
+    }
+
+    @Override
+    public Integer IsUser(String UserName, String Pass) {
+        return userDaoImp.IsUser(UserName,Pass);
+    }
+
+    @Override
+    public List<User> searchProByName(String name) {
+        return userDaoImp.searchUserByName(name);
+    }
+
+    @Override
+    public List<User> searchBetween(Float num1, Float num2) {
         return null;
     }
 
     @Override
-    public List searchProByName(String name) {
-        return null;
-    }
-
-    @Override
-    public List searchBetween(Float num1, Float num2) {
-        return null;
-    }
-
-    @Override
-    public List getAllBySort() {
+    public List<User> getAllBySort() {
         return null;
     }
 }

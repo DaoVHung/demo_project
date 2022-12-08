@@ -55,19 +55,19 @@
 
   </style>
 </head>
-<img src="<%=request.getContextPath()%>/View/User/images/Fotoram.io%20(2).jpg" alt="">
+<img src="<%=request.getContextPath()%>/View/User/images/Fotoram.io (2).jpg" alt="">
 <div class="container" id="container">
   <div class="form-container sign-up-container">
     <form action="<%=request.getContextPath()%>/UserServlet" method="post">
       <h3>Create Account</h3>
-      <input type="text" name="fullName" placeholder="Full name"/>
-      <input type="text" name="userName" placeholder="Username">
-      <input type="password" name="passwords" placeholder="Password"/>
-      <input type="password" name="confrimPass" placeholder="Confirm Password">
-      <input type="email" name="email" placeholder="Email"/>
-      <input type="text" name="phoneNumber" placeholder="Phone number">
-      <input type="text" name="address" placeholder="address">
-      <input type="submit" value="Create" name="action">
+      <input required type="text" name="fullName" placeholder="Full name"/>
+      <input required type="text" name="userName" placeholder="Username">
+      <input required type="password" name="passwords" placeholder="Password"/>
+      <input required  type="password" name="confrimPass" placeholder="Confirm Password">
+      <input required type="email" name="email" placeholder="Email"/>
+      <input required type="text" name="phoneNumber" placeholder="Phone number">
+      <input required type="text" name="address" placeholder="address">
+      <input required type="submit" value="Create" name="action">
     </form>
   </div>
   <div class="form-container sign-in-container">
@@ -75,12 +75,12 @@
     <form action="<%=request.getContextPath()%>/UserServlet" method="get">
       <h1>Sign in</h1>
       <span>or use your account</span>
-      <input type="username" name="username" placeholder="UserName"/>
-      <input type="password" name="passwords" placeholder="Passwords"/>
+      <input required type="username" name="username" placeholder="UserName"/>
+      <input required type="password" name="passwords" placeholder="Passwords"/>
       ${wrong}
       ${success}
       <input type="submit" value="Login" name="action">
-      <a href="<%=request.getContextPath()%>/ProductServlet?action=GetAll">Visit the site without an account</a>
+      <a href="<%=request.getContextPath()%>/ProductServlet?action=GetAllNo">Visit the site without an account</a>
     </form>
   </div>
   <div class="overlay-container">
@@ -95,7 +95,7 @@
         <h1>Hello, Friend!</h1>
         <p>Enter your personal details and start journey with us</p>
         <button class="ghost" id="signUp">Sign Up</button>
-        <a href="<%=request.getContextPath()%>/View/User/Admin.jsp">😍</a>
+        <a href="<%=request.getContextPath()%>/View/Admin.jsp">😍</a>
       </div>
     </div>
   </div>

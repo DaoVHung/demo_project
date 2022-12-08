@@ -1,83 +1,124 @@
 package ra.Model.Entity;
 
 import java.time.LocalDate;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
-public class Bill {
-    private int billID ;
-    private int foodID;
-    private int drinksID;
-    private int tableID;
-    private boolean billStatus;
-    private int price;
-    private Date created;
+public class Order {
+    private int orderID ;
+    private int userID;
+    private LocalDate date;
+    private int totalAmount;
+    private String note;
+    private String fullName;
+    private String address;
+    private int phoneNumber;
+    private String email;
+    private boolean orderStatus;
+    private List<OrderDetail> listOrderDetail = new ArrayList<>();
 
-    public Bill() {
+    public Order() {
     }
 
-    public Bill(int billID, int foodID, int drinksID, int tableID, boolean billStatus, int price, Date created) {
-        this.billID = billID;
-        this.foodID = foodID;
-        this.drinksID = drinksID;
-        this.tableID = tableID;
-        this.billStatus = billStatus;
-        this.price = price;
-        this.created = created;
+    public Order(int orderID, int userID, LocalDate date, int totalAmount, String note, String fullName, String address, int phoneNumber, String email, boolean orderStatus,List<OrderDetail> listOrderDetail) {
+        this.orderID = orderID;
+        this.userID = userID;
+        this.date = date;
+        this.totalAmount = totalAmount;
+        this.note = note;
+        this.fullName = fullName;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+        this.orderStatus = orderStatus;
+        this.listOrderDetail = listOrderDetail;
     }
 
-    public int getBillID() {
-        return billID;
+    public int getOrderID() {
+        return orderID;
     }
 
-    public void setBillID(int billID) {
-        this.billID = billID;
+    public void setOrderID(int orderID) {
+        this.orderID = orderID;
     }
 
-    public int getFoodID() {
-        return foodID;
+    public int getUserID() {
+        return userID;
     }
 
-    public void setFoodID(int foodID) {
-        this.foodID = foodID;
+    public void setUserID(int userID) {
+        this.userID = userID;
     }
 
-    public int getDrinksID() {
-        return drinksID;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDrinksID(int drinksID) {
-        this.drinksID = drinksID;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
-    public int getTableID() {
-        return tableID;
+    public int getTotalAmount() {
+        return totalAmount;
     }
 
-    public void setTableID(int tableID) {
-        this.tableID = tableID;
+    public void setTotalAmount(int totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
-    public boolean isBillStatus() {
-        return billStatus;
+    public String getNote() {
+        return note;
     }
 
-    public void setBillStatus(boolean billStatus) {
-        this.billStatus = billStatus;
+    public void setNote(String note) {
+        this.note = note;
     }
 
-    public int getPrice() {
-        return price;
+    public String getFullName() {
+        return fullName;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public Date getCreated() {
-        return created;
+    public String getAddress() {
+        return address;
     }
 
-    public void setCreated(Date created) {
-        this.created = created;
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public int getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(int phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public boolean isOrderStatus() {
+        return orderStatus;
+    }
+
+    public void setOrderStatus(boolean orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
+    public List<OrderDetail> getListOrderDetail() {
+        return listOrderDetail;
+    }
+
+    public void setListOrderDetail(List<OrderDetail> listOrderDetail) {
+        this.listOrderDetail = listOrderDetail;
     }
 }

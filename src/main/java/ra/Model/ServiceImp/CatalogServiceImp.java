@@ -12,17 +12,17 @@ public class CatalogServiceImp implements CatalogService<Catalog, String> {
 private CatalogDao<Catalog,String> stringCatalogDao = new CatalogImp();
     @Override
     public boolean delete(Integer id) {
-        return false;
+        return stringCatalogDao.delete(id);
     }
 
     @Override
     public Catalog getById(Integer id) {
-        return null;
+        return stringCatalogDao.getById(id);
     }
 
     @Override
     public List<Catalog> searchProByName(String name) {
-        return null;
+        return stringCatalogDao.searchBillByName(name);
     }
 
     @Override
@@ -40,14 +40,16 @@ private CatalogDao<Catalog,String> stringCatalogDao = new CatalogImp();
         return stringCatalogDao.getAll();
     }
 
+
+
     @Override
     public boolean save(Catalog catalog) {
-        return false;
+        return stringCatalogDao.create(catalog);
     }
 
     @Override
     public boolean update(Catalog catalog) {
-        return false;
+        return stringCatalogDao.update(catalog);
     }
 
     @Override

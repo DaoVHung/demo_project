@@ -1,1 +1,1 @@
-package ra.Model.Service;public interface starService {}
+package ra.Model.Service;import ra.Model.Dao.ManagementDao;import ra.Model.Entity.Order;import ra.Model.Entity.Star;import java.util.List;public interface StarService<T,V> extends ManagementDao<T,V>{    boolean delete(Integer id);    List<Star> getAllConfirm();    List<Star> searchByconfirm(String name);    Order getById(Integer id);    List<T> searchProByName(String name);    List<T> searchBetween(Float num1, Float num2);    List<T> getAllBySort();    Integer getbyID(Integer id);}

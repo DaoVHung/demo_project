@@ -18,7 +18,7 @@
     <link rel="shortcut icon" href="<%=request.getContextPath()%>/Views/Admin/img/icons/icon-48x48.png"/>
 
     <link rel="canonical" href="https://demo-basic.adminkit.io/"/>
-    <title>Catalog</title>
+    <title>Gent Steak Management</title>
     <link href="<%=request.getContextPath()%>/View/Admin/css/app1.css" rel="stylesheet">
     <link href="<%=request.getContextPath()%>/View/Admin/css/1.css" rel="stylesheet">
 
@@ -41,8 +41,8 @@
                 <li class="sidebar-header">
                     Pages
                 </li>
-                <li class="sidebar-item active ">
-                    <a class="sidebar-link" href="<%=request.getContextPath()%>/View/Admin/Home.jsp">
+                <li class="sidebar-item ">
+                    <a class="sidebar-link" href="<%=request.getContextPath()%>/OrderServlet?action=earning">
                         <i class="bi bi-house-dash-fill"></i> <span class="align-middle">Dashboard</span>
                     </a>
                 </li>
@@ -165,7 +165,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <h1 class="mt-1 mb-3">$21.300</h1>
+                                            <h1 class="mt-1 mb-3">${earning} $</h1>
                                             <div class="mb-0">
                                                     <span class="text-success"> <i
                                                             class="mdi mdi-arrow-bottom-right"></i> 6.65% </span>

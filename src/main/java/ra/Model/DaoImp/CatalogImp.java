@@ -1,13 +1,11 @@
 package ra.Model.DaoImp;
 
 import ra.Model.Dao.CatalogDao;
-import ra.Model.Entity.Bill;
 import ra.Model.Entity.Catalog;
 import ra.Model.Util.ConnectionDataBase;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +14,28 @@ public class CatalogImp implements CatalogDao<Catalog, String> {
 
     @Override
     public List<Catalog> searchBillByName(String name) {
-        return null;
+        Connection conn = null;
+        CallableStatement callSt = null;
+        List<Catalog> catalogList = null;
+        try {
+            conn = ConnectionDataBase.openConnection();
+            callSt = conn.prepareCall("{call 6pr_SearchByCatalogName(?)}");
+            callSt.setString(1,name);
+            ResultSet rs = callSt.executeQuery();
+            catalogList = new ArrayList<>();
+            while (rs.next()) {
+                Catalog cata = new Catalog();
+                cata.setCatalogID(rs.getInt("CatalogID"));
+                cata.setCatalogName(rs.getString("CatalogName"));
+                cata.setCatalogStatus(rs.getBoolean("CatalogStatus"));
+                catalogList.add(cata);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionDataBase.closeConnection(conn, callSt);
+        }
+        return catalogList;
     }
 
     @Override
@@ -26,7 +45,7 @@ public class CatalogImp implements CatalogDao<Catalog, String> {
         boolean result = true;
         try {
             conn = ConnectionDataBase.openConnection();
-            callSt = conn.prepareCall("{call pr_DeleteCatalog(?)}");
+            callSt = conn.prepareCall("{call 6pr_DeleteCatalog(?)}");
             callSt.setInt(1, id);
             callSt.executeUpdate();
         } catch (Exception e) {
@@ -45,13 +64,14 @@ public class CatalogImp implements CatalogDao<Catalog, String> {
         Catalog cata = null;
         try {
             conn = ConnectionDataBase.openConnection();
-            callSt = conn.prepareCall("{call pr_GetByIdCatalog()}");
+            callSt = conn.prepareCall("{call 6pr_GetByIdCatalog(?)}");
+            callSt.setInt(1,id);
             ResultSet rs = callSt.executeQuery();
             cata = new Catalog();
             while (rs.next()) {
-                cata.setCatalogID(rs.getInt("CatalogID"));
+                cata.setCatalogID(rs.getInt("CatalogId"));
                 cata.setCatalogName(rs.getString("CatalogName"));
-                cata.setTitle(rs.getString("Title"));
+                cata.setCatalogStatus(rs.getBoolean("CatalogStatus"));
 
             }
         } catch (Exception e) {
@@ -59,7 +79,7 @@ public class CatalogImp implements CatalogDao<Catalog, String> {
         } finally {
             ConnectionDataBase.closeConnection(conn, callSt);
         }
-        return cata;
+        return  cata;
     }
 
     @Override
@@ -69,14 +89,14 @@ public class CatalogImp implements CatalogDao<Catalog, String> {
         List<Catalog> catalogList = null;
         try {
             conn = ConnectionDataBase.openConnection();
-            callSt = conn.prepareCall("{call pr_GetAllCatalog()}");
+            callSt = conn.prepareCall("{call 6pr_GetAllCatalog()}");
             ResultSet rs = callSt.executeQuery();
             catalogList = new ArrayList<>();
             while (rs.next()) {
                 Catalog cata = new Catalog();
                 cata.setCatalogID(rs.getInt("CatalogID"));
                 cata.setCatalogName(rs.getString("CatalogName"));
-                cata.setTitle(rs.getString("Title"));
+                cata.setCatalogStatus(rs.getBoolean("CatalogStatus"));
                 catalogList.add(cata);
             }
         } catch (Exception e) {
@@ -87,6 +107,7 @@ public class CatalogImp implements CatalogDao<Catalog, String> {
         return catalogList;
     }
 
+
     @Override
     public boolean create(Catalog catalog) {
         Connection conn = null;
@@ -94,10 +115,9 @@ public class CatalogImp implements CatalogDao<Catalog, String> {
         boolean result = true;
         try {
             conn = ConnectionDataBase.openConnection();
-            callSt = conn.prepareCall("{call pr_InsertDrinks_Catalog(?,?,?)}");
-            callSt.setInt(1, catalog.getCatalogID());
-            callSt.setString(2, catalog.getCatalogName());
-            callSt.setString(3, catalog.getTitle());
+            callSt = conn.prepareCall("{call 6pr_Insert_Catalog(?,?)}");
+            callSt.setString(1, catalog.getCatalogName());
+            callSt.setBoolean(2,catalog.isCatalogStatus());
             callSt.execute();
         } catch (Exception e) {
             result = false;
@@ -115,10 +135,10 @@ public class CatalogImp implements CatalogDao<Catalog, String> {
         boolean result = true;
         try {
             conn = ConnectionDataBase.openConnection();
-            callSt = conn.prepareCall("{call pr_UpdateDrinks_Catalog(?,?,?)}");
+            callSt = conn.prepareCall("{call 6pr_Update_Catalog(?,?,?)}");
             callSt.setInt(1, catalog.getCatalogID());
             callSt.setString(2, catalog.getCatalogName());
-            callSt.setString(3, catalog.getTitle());
+            callSt.setBoolean(3,catalog.isCatalogStatus());
             callSt.executeUpdate();
         } catch (Exception e) {
             result = false;
@@ -128,6 +148,7 @@ public class CatalogImp implements CatalogDao<Catalog, String> {
         }
         return result;
     }
+
 
     @Override
     public boolean delete(String id) {

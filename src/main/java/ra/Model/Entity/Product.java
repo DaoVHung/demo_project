@@ -1,39 +1,57 @@
 package ra.Model.Entity;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class Drinks {
-    private int drinksID;
+public class Product {
+    private int productID;
     private String catalogID;
-    private String drinksName ;
+    private String productName;
     private int price ;
-    private String title;
-    private boolean drinksStatus;
-    private String drinksImg;
-    private List<String> listImgLinks = new ArrayList<>();
+    private String description;
+    private boolean productStatus;
+    private String productImg;
+    private int orderID;
 
-    public Drinks() {
+    private int discount;
+
+    public Product() {
     }
 
-    public Drinks(int drinksID, String catalogID, String drinksName, int price, String title, boolean drinksStatus, String drinksImg, List<String> listImgLinks) {
-
-        this.drinksID = drinksID;
+    public Product(int productID, String catalogID, String productName, int price, String description, boolean productStatus, String productImg, int discount) {
+        this.productID = productID;
         this.catalogID = catalogID;
-        this.drinksName = drinksName;
+        this.productName = productName;
         this.price = price;
-        this.title = title;
-        this.drinksStatus = drinksStatus;
-        this.drinksImg = drinksImg;
-        this.listImgLinks = listImgLinks;
+        this.description = description;
+        this.productStatus = productStatus;
+        this.productImg = productImg;
+        this.discount = discount;
     }
 
-    public int getDrinksID() {
-        return drinksID;
+    public Product(int productID, String catalogID, String productName, int price, String description, boolean productStatus, String productImg, int orderID, int discount) {
+        this.productID = productID;
+        this.catalogID = catalogID;
+        this.productName = productName;
+        this.price = price;
+        this.description = description;
+        this.productStatus = productStatus;
+        this.productImg = productImg;
+        this.orderID = orderID;
+        this.discount = discount;
     }
 
-    public void setDrinksID(int drinksID) {
-        this.drinksID = drinksID;
+    public int getOrderID() {
+        return orderID;
+    }
+
+    public void setOrderID(int orderID) {
+        this.orderID = orderID;
+    }
+
+    public int getProductID() {
+        return productID;
+    }
+
+    public void setProductID(int productID) {
+        this.productID = productID;
     }
 
     public String getCatalogID() {
@@ -44,12 +62,12 @@ public class Drinks {
         this.catalogID = catalogID;
     }
 
-    public String getDrinksName() {
-        return drinksName;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setDrinksName(String drinksName) {
-        this.drinksName = drinksName;
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public int getPrice() {
@@ -60,35 +78,35 @@ public class Drinks {
         this.price = price;
     }
 
-    public String getTitle() {
-        return title;
+    public String getDescription() {
+        return description;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public boolean isDrinksStatus() {
-        return drinksStatus;
+    public boolean isProductStatus() {
+        return productStatus;
     }
 
-    public void setDrinksStatus(boolean drinksStatus) {
-        this.drinksStatus = drinksStatus;
+    public void setProductStatus(boolean productStatus) {
+        this.productStatus = productStatus;
     }
 
-    public String getDrinksImg() {
-        return drinksImg;
+    public String getProductImg() {
+        return productImg;
     }
 
-    public void setDrinksImg(String drinksImg) {
-        this.drinksImg = drinksImg;
+    public void setProductImg(String productImg) {
+        this.productImg = productImg;
     }
 
-    public List<String> getListImgLinks() {
-        return listImgLinks;
+    public int getDiscount() {
+        return discount;
     }
 
-    public void setListImgLinks(List<String> listImgLinks) {
-        this.listImgLinks = listImgLinks;
+    public void setDiscount(int discount) {
+        this.discount = discount;
     }
 }

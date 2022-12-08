@@ -1,37 +1,41 @@
 package ra.Model.Entity;
+//UserID int primary key auto_increment,
+//        UserName VARCHAR(30) not null ,
+//        Passwords VARCHAR(30) not null ,
+//        ConfirmPass VARCHAR(30) not null,
+//        FullName nvarchar(50) not null ,
+//        Email varchar(50) not null ,
+//        PhoneNumber int not null ,
+//        UserStatus bit  default (true),
+//        Permission bit  default (false)
 
 public class User {
     private int userID;
     private String userName;
-    private String password;
+    private String passwords;
     private String confirmPass;
     private String fullName;
-    private boolean userStatus;
-    private boolean permission;
     private String email;
     private String phoneNumber;
+    private boolean userStatus;
+    private boolean permission;
+    private String address;
+
 
     public User() {
     }
 
-    public User(int userID,
-                String userName,
-                String password,
-                String confirmPass,
-                String fullName,
-                boolean userStatus,
-                boolean permission,
-                String email,
-                String phoneNumber) {
+    public User(int userID, String userName, String passwords, String confirmPass, String fullName, String email, String phoneNumber, boolean userStatus, boolean permission, String address) {
         this.userID = userID;
         this.userName = userName;
-        this.password = password;
+        this.passwords = passwords;
         this.confirmPass = confirmPass;
         this.fullName = fullName;
-        this.userStatus = userStatus;
-        this.permission = permission;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.userStatus = userStatus;
+        this.permission = permission;
+        this.address = address;
     }
 
     public int getUserID() {
@@ -50,12 +54,12 @@ public class User {
         this.userName = userName;
     }
 
-    public String getPassword() {
-        return password;
+    public String getPasswords() {
+        return passwords;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setPasswords(String passwords) {
+        this.passwords = passwords;
     }
 
     public String getConfirmPass() {
@@ -74,6 +78,22 @@ public class User {
         this.fullName = fullName;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     public boolean isUserStatus() {
         return userStatus;
     }
@@ -90,19 +110,11 @@ public class User {
         this.permission = permission;
     }
 
-    public String getEmail() {
-        return email;
+    public String getAddress() {
+        return address;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

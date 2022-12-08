@@ -86,6 +86,10 @@ public class ProductServlet extends HttpServlet {
             getSalad(request, response);
         } else if (action != null && action.equals("Admin")) {
 
+        } else if (action != null && action.equals("GetAllNo")) {
+            HttpSession session = request.getSession();
+            session.invalidate();
+                getAllProductDetail(request, response);
         } else {
             getAllProduct(request, response);
         }
@@ -148,7 +152,6 @@ public class ProductServlet extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         if (action != null && action.equals("Create")) {
-            Product productNew = new Product();
             String pathFolderImage = "D:/MD-3/ProjectMD3/src/main/webapp/images";
             File file = new File(pathFolderImage);
             if (!file.exists()) {
@@ -161,7 +164,6 @@ public class ProductServlet extends HttpServlet {
             product.setDescription(request.getParameter("descriptions"));
             product.setProductStatus(Boolean.parseBoolean(request.getParameter("status")));
             product.setDiscount(Integer.parseInt(request.getParameter("discount")));
-
             for (Part part : request.getParts()) {
                 if (part.getName().equals("productImg")) {
                     String productImgName = part.getSubmittedFileName();

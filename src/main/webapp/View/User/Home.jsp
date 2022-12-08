@@ -11,7 +11,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Vegefoods - Free Bootstrap 4 Template by Colorlib</title>
+    <title>Gent Steak</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/View/User/css/css/font1.css">
@@ -30,17 +30,23 @@
     <link rel="stylesheet" href="<%=request.getContextPath()%>/View/User/css/icomoon.css">
     <link rel="stylesheet" href="<%=request.getContextPath()%>/View/User/css/style.css">
     <style>
-        .py-1 {
-            background-color: black;
-        }
-
-        .bg-primary {
-            background-color: black;
-        }
+        .product {
+            display: block;
+            width: 100%;
+            border-radius: 2%;
+            box-shadow: 2px 9px 12px 1px;
+            margin-bottom: 30px;
+            position: relative;
+            -moz-transition: all 0.3s ease;
+            -o-transition: all 0.3s ease;
+            -webkit-transition: all 0.3s ease;
+            -ms-transition: all 0.3s ease;
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0; }
     </style>
 </head>
 <body class="goto-here">
-<jsp:include page="../Header.jsp"/>
+<jsp:include page="../header.jsp"/>
 
 <section id="home-section" class="hero">
 
@@ -70,7 +76,6 @@
 
                     <div class="col-md-12 ftco-animate text-center">
                         <h1 class="mb-2">Gent Steak</h1>
-                        ${Notify}
                         <h2 class="subheading mb-4">British Flavored Steak</h2>
                         <p><a href="<%=request.getContextPath()%>/ProductServlet?action=GetAllFood"
                               class="btn btn-primary">View Details</a></p>
@@ -223,8 +228,8 @@
                             </h3>
                             <div class="d-flex">
                                 <div class="pricing">
-                                    <p class="price"><span class="mr-2 price-dc">${d.price} VNĐ</span> <span
-                                            class="price-sale">${d.price*(100-d.discount)/100} VNĐ</span></p>
+                                    <p class="price"><span class="mr-2 price-dc">${d.price} $</span> <span
+                                            class="price-sale">${d.price*(100-d.discount)/100} $</span></p>
                                 </div>
                             </div>
                             <div class="bottom-area d-flex px-3">
@@ -233,7 +238,8 @@
                                        class="add-to-cart d-flex justify-content-center align-items-center text-center">
                                         <span><i class="ion-ios-menu"></i></span>
                                     </a>
-                                    <a href="<%=request.getContextPath()%>/CartServlet?action=addCart&&discount=${d.discount}&&productID=${d.productID}" class="buy-now d-flex justify-content-center align-items-center mx-1">
+                                    <a href="<%=request.getContextPath()%>/CartServlet?action=addCart&&discount=${d.discount}&&productID=${d.productID}"
+                                       class="buy-now d-flex justify-content-center align-items-center mx-1">
                                         <span><i class="ion-ios-cart"></i></span>
                                     </a>
                                 </div>
@@ -263,7 +269,41 @@
                     <div class="item">
                         <div class="testimony-wrap p-4 pb-5">
                             <div class="user-img mb-5"
-                                 style="background-image: url(<%=request.getContextPath()%>/View/User/images/person_3.jpg)">
+                                 style="background-image: url(<%=request.getContextPath()%>/View/User/images/Newfolder/Gordon-Ramsay-British-restaurateur.webp)">
+                    <span class="quote d-flex align-items-center justify-content-center">
+                      <i class="icon-quote-left"></i>
+                    </span>
+                            </div>
+                            <div class="text text-center">
+                                <p class="mb-5 pl-4 line">“Cooking is a profession that requires the pursuer to have
+                                    health, grit, a broad vision and an open mind. There is nothing better than
+                                    traveling the world, enjoying the best food, whether you are a Chef or not”</p>
+                                <p class="name">Gordon Ramsay</p>
+                                <span class="position">Master Chef</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5">
+                            <div class="user-img mb-5"
+                                 style="background-image: url(<%=request.getContextPath()%>/View/User/images/Newfolder/186498620_2871088929796755_5975141680358415469_n.jpg)">
+                    <span class="quote d-flex align-items-center justify-content-center">
+                      <i class="icon-quote-left"></i>
+                    </span>
+                            </div>
+                            <div class="text text-center">
+                                <p class="mb-5 pl-4 line">Opening the heart.
+                                    One of the best horses in the world, the condor leads the bow.
+                                    Heaven and earth capital at the crossroads of the center.</p>
+                                <p class="name">Hung Beoo</p>
+                                <span class="position">Vice cook</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="testimony-wrap p-4 pb-5">
+                            <div class="user-img mb-5"
+                                 style="background-image: url(<%=request.getContextPath()%>/View/User/images/Newfolder/1374636071-05a-1.jpg)">
                     <span class="quote d-flex align-items-center justify-content-center">
                       <i class="icon-quote-left"></i>
                     </span>
@@ -271,7 +311,7 @@
                             <div class="text text-center">
                                 <p class="mb-5 pl-4 line">Far far away, behind the word mountains, far from the
                                     countries Vokalia and Consonantia, there live the blind texts.</p>
-                                <p class="name">Garreth Smith</p>
+                                <p class="name">周静静</p>
                                 <span class="position">UI Designer</span>
                             </div>
                         </div>
@@ -312,106 +352,7 @@
         </div>
     </div>
 </section>
-
-<section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
-    <div class="container py-4">
-
-        <div class="row d-flex justify-content-center py-5">
-            <div class="col-md-6">
-                <img style="position:fixed;" src="<%=request.getContextPath()%>/View/User/images/wine-7.jpg" alt="">
-                <h2 style="font-size: 22px;" class="mb-0">Subcribe to our Newsletter</h2>
-                <span>Get e-mail updates about our latest shops and special offers</span>
-            </div>
-            <div class="col-md-6 d-flex align-items-center">
-                <form action="#" class="subscribe-form">
-                    <div class="form-group d-flex">
-                        <input type="text" class="form-control" placeholder="Enter email address">
-                        <input type="submit" value="Subscribe" class="submit px-3">
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</section>
-<footer class="ftco-footer ftco-section">
-    <div class="container">
-        <div class="row">
-            <div class="mouse">
-                <a href="#" class="mouse-icon">
-                    <div class="mouse-wheel"><span class="ion-ios-arrow-up"></span></div>
-                </a>
-            </div>
-        </div>
-        <div class="row mb-5">
-            <div class="col-md">
-                <div class="ftco-footer-widget mb-4">
-                    <h2 class="ftco-heading-2">Gent Steak</h2>
-                    <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia.</p>
-                    <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-                        <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                        <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                        <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md">
-                <div class="ftco-footer-widget mb-4 ml-md-5">
-                    <h2 class="ftco-heading-2">Menu</h2>
-                    <ul class="list-unstyled">
-                        <li><a href="shop.html" class="py-2 d-block">Shop</a></li>
-                        <li><a href="about.html" class="py-2 d-block">About</a></li>
-                        <li><a href="blog.html" class="py-2 d-block">Journal</a></li>
-                        <li><a href="contact.html" class="py-2 d-block">Contact Us</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="ftco-footer-widget mb-4">
-                    <h2 class="ftco-heading-2">Help</h2>
-                    <div class="d-flex">
-                        <ul class="list-unstyled mr-l-5 pr-l-3 mr-4">
-                            <li><a href="#" class="py-2 d-block">Shipping Information</a></li>
-                            <li><a href="#" class="py-2 d-block">Returns &amp; Exchange</a></li>
-                            <li><a href="#" class="py-2 d-block">Terms &amp; Conditions</a></li>
-                            <li><a href="#" class="py-2 d-block">Privacy Policy</a></li>
-                        </ul>
-                        <ul class="list-unstyled">
-                            <li><a href="#" class="py-2 d-block">FAQs</a></li>
-                            <li><a href="#" class="py-2 d-block">Contact</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md">
-                <div class="ftco-footer-widget mb-4">
-                    <h2 class="ftco-heading-2">Have a Questions?</h2>
-                    <div class="block-23 mb-3">
-                        <ul>
-                            <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span>
-                            </li>
-                            <li><a href="#"><span class="icon icon-phone"></span><span
-                                    class="text">+2 392 3929 210</span></a></li>
-                            <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12 text-center">
-
-                <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    Copyright &copy;<script>document.write(new Date().getFullYear());</script>
-                    All rights reserved | This template is made with <i class="icon-heart color-danger"
-                                                                        aria-hidden="true"></i> by <a
-                            href="https://colorlib.com" target="_blank">Colorlib</a>
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                </p>
-            </div>
-        </div>
-    </div>
-</footer>
+<jsp:include page="footer.jsp"/>
 
 
 <!-- loader -->
@@ -438,8 +379,6 @@
 <script src="<%=request.getContextPath()%>/View/User/js/bootstrap-datepicker.js"></script>
 <script src="<%=request.getContextPath()%>/View/User/js/scrollax.min.js"></script>
 <script src="<%=request.getContextPath()%>/View/User/css/css/font4.js"></script>
-
-<%--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>--%>
 <script src="<%=request.getContextPath()%>/View/User/js/google-map.js"></script>
 <script src="<%=request.getContextPath()%>/View/User/js/main.js"></script>
 

@@ -1,1 +1,1 @@
-package ra.Model.Service;public class ContactEmailService {}
+package ra.Model.Service;public interface ContactEmailService <T,V> extends ManageService<T,V> {}

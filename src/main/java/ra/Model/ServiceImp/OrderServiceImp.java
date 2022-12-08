@@ -1,11 +1,44 @@
 package ra.Model.ServiceImp;
 
+import ra.Model.Dao.OrderDao;
+import ra.Model.Dao.ProductDao;
+import ra.Model.DaoImp.OrderDaoImp;
+import ra.Model.DaoImp.ProductDaoImp;
 import ra.Model.Entity.Order;
-import ra.Model.Service.BillService;
+import ra.Model.Entity.Product;
+import ra.Model.Service.OrderService;
 
 import java.util.List;
 
-public class BillServiceImp implements BillService {
+public class OrderServiceImp implements OrderService<Order, String> {
+    private OrderDao<Order,String> orderDao = new OrderDaoImp();
+
+
+    @Override
+    public List<Order> getAll() {
+        return orderDao.getAll();
+    }
+
+    @Override
+    public boolean save(Order order) {
+        return orderDao.create(order);
+    }
+
+    @Override
+    public boolean update(Order order) {
+        return orderDao.update(order);
+    }
+
+    @Override
+    public boolean delete(String id) {
+        return false;
+    }
+
+    @Override
+    public Order getById(String id) {
+        return null;
+    }
+
     @Override
     public boolean delete(Integer id) {
         return false;
@@ -13,46 +46,36 @@ public class BillServiceImp implements BillService {
 
     @Override
     public Order getById(Integer id) {
+        return orderDao.getById(id);
+    }
+
+    @Override
+    public List<Order> searchConfirm(String name) {
+        return orderDao.searchConfirm(name);
+    }
+
+    @Override
+    public Integer getEarning() {
+        return orderDao.getEarning();
+    }
+
+    @Override
+    public List<Order> searchProByName(String name) {
+        return orderDao.searchProductByName(name);
+    }
+
+    @Override
+    public List<Order> searchBetween(Float num1, Float num2) {
         return null;
     }
 
     @Override
-    public List searchProByName(String name) {
+    public List<Order> getAllBySort() {
         return null;
     }
 
     @Override
-    public List searchBetween(Float num1, Float num2) {
-        return null;
-    }
-
-    @Override
-    public List getAllBySort() {
-        return null;
-    }
-
-    @Override
-    public List getAll() {
-        return null;
-    }
-
-    @Override
-    public boolean save(Object o) {
-        return false;
-    }
-
-    @Override
-    public boolean update(Object o) {
-        return false;
-    }
-
-    @Override
-    public boolean delete(Object id) {
-        return false;
-    }
-
-    @Override
-    public Object getById(Object id) {
-        return null;
+    public List<Order> getConfrim() {
+        return orderDao.getConfrim();
     }
 }

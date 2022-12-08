@@ -65,7 +65,7 @@ public class CatalogServlet extends HttpServlet {
             String catalogName = request.getParameter("catalogName");
             List<Catalog> catalogList = catalogService.searchProByName(catalogName);
             request.setAttribute("catalogList", catalogList);
-            request.getRequestDispatcher("category.jsp").forward(request,response);
+            request.getRequestDispatcher("View/Admin/Catalog/category.jsp").forward(request,response);
         }else if(action!=null && action.equals("Update")){
             Catalog c = new Catalog();
             c.setCatalogID(Integer.parseInt(request.getParameter("catalogID")));

@@ -2,10 +2,13 @@ package ra.Controller;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import ra.Model.Entity.Order;
 import ra.Model.Entity.Product;
 import ra.Model.Entity.User;
+import ra.Model.Service.OrderService;
 import ra.Model.Service.ProductService;
 import ra.Model.Service.UserService;
+import ra.Model.ServiceImp.OrderServiceImp;
 import ra.Model.ServiceImp.ProductVerviceImp;
 
 import javax.servlet.ServletException;
@@ -23,18 +26,22 @@ public class UserServlet extends HttpServlet {
     private UserService<User, String> userService = new ra.Model.ServiceImp.UserServiceImp();
     private static final Gson GSON = new GsonBuilder().create();
     private ProductService<Product, String> productService = new ProductVerviceImp();
+    private OrderService<Order, String> orderService = new OrderServiceImp();
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-
+              response.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         if (action != null && action.equals("Login")) {
             String username = request.getParameter("username");
             String passwords = request.getParameter("passwords");
             boolean result = userService.matchAccAdmin(username, passwords);
             if (result) {
-                request.getRequestDispatcher("View/Admin/Home.jsp").include(request, response);
+                Integer earning = orderService.getEarning();
+                request.setAttribute("earning", earning);
+                request.getRequestDispatcher("View/Admin/Home.jsp").forward(request, response);
             } else {
                 boolean result2 = userService.matchAcc(username, passwords);
                 if (result2) {

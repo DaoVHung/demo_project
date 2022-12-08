@@ -3,36 +3,34 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-
     <meta name="author" content="AdminKit">
     <meta name="keywords"
           content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="shortcut icon" href="../../img/icons/icon-48x48.png"/>
+    <link rel="shortcut icon" href="<%=request.getContextPath()%>/Views/Admin/img/icons/icon-48x48.png"/>
 
     <link rel="canonical" href="https://demo-basic.adminkit.io/"/>
-
-    <title>Create Product</title>
-
-    <link href="css/app2.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/2.css">
-    <script type="text/javascript" src="<%=request.getContextPath()%>/ckeditor/ckeditor.js"></script>
+    <title>Gent Steak Management</title>
+    <link href="<%=request.getContextPath()%>/View/Admin/css/app1.css" rel="stylesheet">
+    <link href="<%=request.getContextPath()%>/View/Admin/css/1.css" rel="stylesheet">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
 <div class="wrapper">
+
     <nav id="sidebar" class="sidebar js-sidebar">
         <div class="sidebar-content js-simplebar">
             <a class="sidebar-brand" href="index.html">
@@ -44,34 +42,50 @@
                     Pages
                 </li>
                 <li class="sidebar-item ">
-                    <a class="sidebar-link" href="index.jsp">
-                        <i class="bi bi-house-dash-fill"></i>  <span class="align-middle">Dashboard</span>
+                    <a class="sidebar-link" href="<%=request.getContextPath()%>/OrderServlet?action=earning">
+                        <i class="bi bi-house-dash-fill"></i> <span class="align-middle">Dashboard</span>
                     </a>
                 </li>
-                <li class="sidebar-item">
-                    <a class="sidebar-link" href="CatalogServlet">
-                        <i class="bi bi-tags"></i>    <span class="align-middle">Category</span>
+                <li class="sidebar-item ">
+                    <a class="sidebar-link" href="<%=request.getContextPath()%>/CatalogServlet">
+                        <i class="bi bi-tags"></i> <span class="align-middle">Category</span>
                     </a>
                 </li>
                 <li class="sidebar-item active">
-                    <a class="sidebar-link" href="ProductServlet">
+                    <a class="sidebar-link" href="<%=request.getContextPath()%>/ProductServlet">
                         <i class="bi bi-cup-straw"></i> <span class="align-middle">Product List</span>
                     </a>
                 </li>
-
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href=BillServlet">
+                    <a class="sidebar-link" href="<%=request.getContextPath()%>/UserServlet">
+                        <i class="bi bi-people-fill"></i><span class="align-middle">User List</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" href="<%=request.getContextPath()%>/OrderServlet">
                         <i class="bi bi-receipt"></i> <span class="align-middle">Bill List</span>
                     </a>
                 </li>
+                <li class="sidebar-item ">
+                    <a class="sidebar-link" href="<%=request.getContextPath()%>/TableServlet">
+                        <i class="bi bi-menu-button-wide"></i><span class="align-middle">Order Table</span>
+                    </a>
+                </li>
+                <li class="sidebar-item ">
+                    <a class="sidebar-link" href="<%=request.getContextPath()%>/StarServlet?action=GetAll">
+                        <i class="bi bi-star-half"></i><span class="align-middle">List Star</span>
+                    </a>
+                </li>
+
+
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="UserServlet">
-                        <i class="bi bi-people-fill"></i><span class="align-middle">User</span>
+                    <a class="sidebar-link" href="<%=request.getContextPath()%>/ContactServlet?action=Update">
+                        <i class="bi bi-phone-vibrate"></i> <span class="align-middle">Contact</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
-                    <a class="sidebar-link" href="#">
-                        <i class="bi bi-phone-vibrate"></i> <span class="align-middle">Contact</span>
+                    <a class="sidebar-link" href="index.jsp">
+                        <i class="bi bi-xbox"></i><span class="align-middle">Log Out</span>
                     </a>
                 </li>
 
@@ -79,13 +93,9 @@
         </div>
     </nav>
 
-    <div class="main">
-        <nav class="navbar navbar-expand navbar-light navbar-bg">
-            <a class="sidebar-toggle js-sidebar-toggle mx-2">
-                <i class="hamburger align-self-center"></i>
-            </a>
 
-        </nav>
+    <div class="main">
+        <jsp:include page="../navbarLink.jsp"/>
 
         <main class="content">
             <div class="container-fluid p-0">
@@ -120,51 +130,54 @@
                                 </tr>
                                 <tr>
                                     <td>Product Name</td>
-                                    <td><input type="text" name="productName"></td>
+                                    <td><input required type="text" name="productName"></td>
                                 </tr>
                                 <tr>
+
+
                                     <td>Catalog ID</td>
                                     <td>
+
                                         <select name="catalogID" id="cataID" class="form-select"  aria-label="Default select example">
                                             <option selected></option>
                                             <c:forEach items="${listcat}" var="c">
                                                 <option value="${c.catalogID}"> ${c.catalogName}  </option>
+
                                             </c:forEach>
                                         </select>
+
                                   </td>
+
                                 </tr>
                                 <tr>
                                     <td>Price</td>
-                                    <td><input type="text" name="price"></td>
-                                </tr>
-                                <tr>
-                                    <td>Title</td>
-                                    <td><input type="text" name="title"></td>
+                                    <td><input required type="text" name="price"></td>
                                 </tr>
                                 <tr>
                                     <td>Desciption</td>
-                                    <td><textarea name="descriptions" id="descriptions" cols="30" rows="10"></textarea></td>
+                                    <td><textarea required name="descriptions" id="descriptions" cols="30" rows="10"></textarea></td>
                                 </tr>
                                 <tr>
                                     <td>Status</td>
                                     <td>
-                                        <input type="radio" name="status" id="active" value="true"/><label for="active">Active</label>
-                                        <input type="radio" name="status" id="inactive" value="false"/><label for="inactive">Inactive</label>
+                                        <input required type="radio" name="status" id="active" value="true"/><label for="active">Active</label>
+                                        <input required type="radio" name="status" id="inactive" value="false"/><label for="inactive">Inactive</label>
                                     </td>
+                                </tr>
+                                <tr>
+                                    <td>Discount</td>
+                                    <td><input required type="text" name="discount"></td>
                                 </tr>
                                 <tr>
                                     <td>Product Image</td>
-                                    <td><input type="file" name="productImg"></td>
-                                </tr>
-                                <tr>
-                                    <td>Sub Image</td>
-                                    <td><input type="file" name="subImg" multiple></td>
+                                    <td><input required type="file" name="productImg"></td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">
-                                        <input class="btn btn-outline-success"  type="submit" value="Create" name="action">
+                                        <input required class="btn btn-outline-success"  type="submit" value="Create" name="action">
                                     </td>
                                 </tr>
+
 
                             </table>
                         </form>
@@ -174,38 +187,11 @@
             </div>
         </main>
 
-        <footer class="footer">
-            <div class="container-fluid">
-                <div class="row text-muted">
-                    <div class="col-6 text-start">
-                        <p class="mb-0">
-                            <a class="text-muted" href="" target="_blank"><strong>DemoAdminKit</strong></a>
-                            - <a class="text-muted" href="" target="_blank"><strong>Bootstrap Admin
-                            Template</strong></a> &copy;
-                        </p>
-                    </div>
-                    <div class="col-6 text-end">
-                        <ul class="list-inline">
-                            <li class="list-inline-item">
-                                <a class="text-muted" href="#" target="_blank">Support</a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a class="text-muted" href="#" target="_blank">Help Center</a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a class="text-muted" href="#" target="_blank">Privacy</a>
-                            </li>
-                            <li class="list-inline-item">
-                                <a class="text-muted" href="#" target="_blank">Terms</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </footer>
+        <jsp:include page="../footer.jsp"/>
+
     </div>
 </div>
-<script src="../../js/app.js"></script>
+<script src="../../../js/app.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var ctx = document.getElementById("chartjs-dashboard-line").getContext("2d");

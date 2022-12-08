@@ -1,57 +1,76 @@
 package ra.Model.DaoImp;
 
-import ra.Model.Dao.DrinksDao;
-import ra.Model.Entity.Bill;
-import ra.Model.Entity.Drinks;
+import ra.Model.Dao.ProductDao;
+import ra.Model.Entity.Product;
 import ra.Model.Util.ConnectionDataBase;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DrinksDaoImp implements DrinksDao<Drinks,String> {
-
-    @Override
-    public List<Drinks> searchDrinksByName(String name) {
+public class ProductDaoImp implements ProductDao<Product,String> {
+    public List<Product> getProductByUserID(Integer id) {
         Connection conn = null;
         CallableStatement callSt = null;
-        List<Drinks> drinksInfo = null;
+        List<Product> productsInfo = null;
         try {
             conn = ConnectionDataBase.openConnection();
-            callSt = conn.prepareCall("{call 3pr_SearchByDrinksName(?)}");
-            callSt.setString(1, name);
+            callSt = conn.prepareCall("{call 3pr_ProductByUser(?)}");
+            callSt.setInt(1, id);
             ResultSet rs = callSt.executeQuery();
-            drinksInfo = new ArrayList<>();
+            productsInfo = new ArrayList<>();
             while (rs.next()) {
-                Drinks drinks = new Drinks();
-                drinks.setDrinksID(rs.getInt("DrinksID"));
-                drinks.setCatalogID(rs.getString("CatalogName"));
-                drinks.setDrinksName(rs.getString("DrinksName"));
-                drinks.setPrice(rs.getInt("DrinksPrice"));
-                drinks.setTitle(rs.getString("DrinksTitle"));
-                drinks.setDrinksStatus(rs.getBoolean("DrinksStatus"));
-                drinksInfo.add(drinks);
+                Product products = new Product();
+                products.setProductID(rs.getInt("productID"));
+                products.setOrderID(rs.getInt("OrderID"));
+                products.setProductName(rs.getString("productName"));
+                products.setProductImg(rs.getString("productImg"));
+                productsInfo.add(products);
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             ConnectionDataBase.closeConnection(conn, callSt);
         }
-        return drinksInfo;
+        return productsInfo;
+    }
+    @Override
+    public List<Product> searchProductByName(String name) {
+        Connection conn = null;
+        CallableStatement callSt = null;
+        List<Product> productsInfo = null;
+        try {
+            conn = ConnectionDataBase.openConnection();
+            callSt = conn.prepareCall("{call 3pr_SearchByProductName(?)}");
+            callSt.setString(1, name);
+            ResultSet rs = callSt.executeQuery();
+            productsInfo = new ArrayList<>();
+            while (rs.next()) {
+                Product products = new Product();
+                products.setProductID(rs.getInt("productID"));
+                products.setCatalogID(rs.getString("CatalogName"));
+                products.setProductName(rs.getString("productName"));
+                products.setPrice(rs.getInt("productPrice"));
+                products.setDescription(rs.getString("Description"));
+                products.setProductStatus(rs.getBoolean("productStatus"));
+                productsInfo.add(products);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionDataBase.closeConnection(conn, callSt);
+        }
+        return productsInfo;
     }
 
     @Override
     public boolean delete(Integer id) {
         Connection conn = null;
-        CallableStatement callSt2 = null;
         CallableStatement callSt = null;
         boolean result = true;
         try {
             conn = ConnectionDataBase.openConnection();
-            callSt2 = conn.prepareCall(" call 3pr_DeleteDrinksImg(?) ");
-            callSt2.setInt(1,id);
-            callSt2.executeUpdate();
-            callSt = conn.prepareCall("{call 3pr_DeleteDrinks(?)}");
+            callSt = conn.prepareCall("{call 3pr_DeleteProduct(?)}");
             callSt.setInt(1, id);
             callSt.executeUpdate();
         } catch (Exception e) {
@@ -64,117 +83,229 @@ public class DrinksDaoImp implements DrinksDao<Drinks,String> {
     }
 
     @Override
-    public Drinks getById(Integer id) {
+    public Product getById(Integer id) {
         Connection conn = null;
         CallableStatement callSt = null;
-        Drinks drinksInfo = null;
+        Product productInfo = null;
         try {
             conn = ConnectionDataBase.openConnection();
-            callSt = conn.prepareCall("{call 3pr_GetByIdDrinks(?)}");
+            callSt = conn.prepareCall("{call 3pr_GetByIdProduct(?)}");
             callSt.setInt(1, id);
             ResultSet rs = callSt.executeQuery();
-            drinksInfo = new Drinks();
+            productInfo = new Product();
             if (rs.next()) {
-                drinksInfo.setDrinksID(rs.getInt("DrinksID"));
-                drinksInfo.setDrinksName(rs.getString("DrinksName"));
-                drinksInfo.setPrice(rs.getInt("DrinksPrice"));
-                drinksInfo.setTitle(rs.getString("DrinksTitle"));
-                drinksInfo.setDrinksImg(rs.getString("DrinksImg"));
-                CallableStatement callSt2 = conn.prepareCall("{call 7pr_get_Img_ID(?) }");
-                callSt2.setInt(1,id);
-                ResultSet rs2 = callSt2.executeQuery();
-                while (rs2.next()){
-                    drinksInfo.getListImgLinks().add(rs2.getString("imgLink"));
-
-                }
-                callSt2.close();
+                productInfo.setProductID(rs.getInt("ProductID"));
+                productInfo.setProductName(rs.getString("ProductName"));
+                productInfo.setPrice(rs.getInt("ProductPrice"));
+                productInfo.setDescription(rs.getString("Description"));
+                productInfo.setProductImg(rs.getString("ProductImg"));
+                productInfo.setDiscount(rs.getInt("Discount"));
              }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             ConnectionDataBase.closeConnection(conn, callSt);
         }
-        return drinksInfo;
+        return productInfo;
     }
     @Override
-    public List<Drinks> getAll() {
+    public List<Product> getAll() {
         Connection conn = null;
         CallableStatement callSt = null;
-        List<Drinks> drinksInfo = null;
+        List<Product> productInfo = null;
         try {
             conn = ConnectionDataBase.openConnection();
-            callSt = conn.prepareCall("{call 3pr_GetAllDrinks()}");
+            callSt = conn.prepareCall("{call 3pr_GetAllProduct()}");
             ResultSet rs = callSt.executeQuery();
-           drinksInfo = new ArrayList<>();
+            productInfo = new ArrayList<>();
             while (rs.next()) {
-                Drinks drinks = new Drinks();
-                drinks.setDrinksID(rs.getInt("DrinksID"));
-                drinks.setCatalogID(rs.getString("CatalogName"));
-                drinks.setDrinksName(rs.getString("DrinksName"));
-                drinks.setPrice(rs.getInt("DrinksPrice"));
-                drinks.setTitle(rs.getString("DrinksTitle"));
-                drinks.setDrinksStatus(rs.getBoolean("DrinksStatus"));
-                drinks.setDrinksImg(rs.getString("DrinksImg"));
-                drinksInfo.add(drinks);
+                Product product = new Product();
+                product.setProductID(rs.getInt("ProductID"));
+                product.setCatalogID(rs.getString("CatalogName"));
+                product.setProductName(rs.getString("ProductName"));
+                product.setPrice(rs.getInt("ProductPrice"));
+                product.setProductStatus(rs.getBoolean("ProductStatus"));
+                product.setProductImg(rs.getString("ProductImg"));
+                product.setDescription(rs.getString("Description"));
+                product.setDiscount(rs.getInt("Discount"));
+                productInfo.add(product);
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             ConnectionDataBase.closeConnection(conn, callSt);
         }
-        return drinksInfo;
+        return productInfo;
     }
-    public List<Drinks> getAllShort() {
+// ==========================   get all mainfood  =========================== //
+public List<Product> getAllMainFood() {
+    Connection conn = null;
+    CallableStatement callSt = null;
+    List<Product> productInfo = null;
+    try {
+        conn = ConnectionDataBase.openConnection();
+        callSt = conn.prepareCall("{call 3pr_GetALLMainFood()}");
+        ResultSet rs = callSt.executeQuery();
+        productInfo = new ArrayList<>();
+        while (rs.next()) {
+            Product product = new Product();
+            product.setProductID(rs.getInt("ProductID"));
+            product.setCatalogID(rs.getString("CatalogName"));
+            product.setProductName(rs.getString("ProductName"));
+            product.setPrice(rs.getInt("ProductPrice"));
+            product.setProductStatus(rs.getBoolean("ProductStatus"));
+            product.setProductImg(rs.getString("ProductImg"));
+            product.setDescription(rs.getString("Description"));
+            product.setDiscount(rs.getInt("Discount"));
+            productInfo.add(product);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    } finally {
+        ConnectionDataBase.closeConnection(conn, callSt);
+    }
+    return productInfo;
+}
+    // ==========================   get all drinks  =========================== //
+    public List<Product> getAllDrinks() {
         Connection conn = null;
         CallableStatement callSt = null;
-        List<Drinks> drinksInfo = null;
+        List<Product> productInfo = null;
         try {
             conn = ConnectionDataBase.openConnection();
-            callSt = conn.prepareCall("{call 3pr_GetAllDrinks()}");
+            callSt = conn.prepareCall("{call 3pr_GetALLDrinks()}");
             ResultSet rs = callSt.executeQuery();
-            drinksInfo = new ArrayList<>();
+            productInfo = new ArrayList<>();
             while (rs.next()) {
-                Drinks drinks = new Drinks();
-                drinks.setDrinksID(rs.getInt("DrinksID"));
-                drinks.setCatalogID(rs.getString("CatalogName"));
-                drinks.setDrinksName(rs.getString("DrinksName"));
-                drinks.setPrice(rs.getInt("DrinksPrice"));
-                drinks.setTitle(rs.getString("DrinksTitle"));
-                drinks.setDrinksStatus(rs.getBoolean("DrinksStatus"));
-                drinksInfo.add(drinks);
+                Product product = new Product();
+                product.setProductID(rs.getInt("ProductID"));
+                product.setCatalogID(rs.getString("CatalogName"));
+                product.setProductName(rs.getString("ProductName"));
+                product.setPrice(rs.getInt("ProductPrice"));
+                product.setProductStatus(rs.getBoolean("ProductStatus"));
+                product.setProductImg(rs.getString("ProductImg"));
+                product.setDescription(rs.getString("Description"));
+                product.setDiscount(rs.getInt("Discount"));
+                productInfo.add(product);
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             ConnectionDataBase.closeConnection(conn, callSt);
         }
-        return drinksInfo;
+        return productInfo;
     }
 
     @Override
-    public boolean create(Drinks drinks) {
+    public List<Product> getAllDesserts() {
         Connection conn = null;
         CallableStatement callSt = null;
+        List<Product> productInfo = null;
+        try {
+            conn = ConnectionDataBase.openConnection();
+            callSt = conn.prepareCall("{call 3pr_GetALLDesserts()}");
+            ResultSet rs = callSt.executeQuery();
+            productInfo = new ArrayList<>();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setProductID(rs.getInt("ProductID"));
+                product.setCatalogID(rs.getString("CatalogName"));
+                product.setProductName(rs.getString("ProductName"));
+                product.setPrice(rs.getInt("ProductPrice"));
+                product.setProductStatus(rs.getBoolean("ProductStatus"));
+                product.setProductImg(rs.getString("ProductImg"));
+                product.setDescription(rs.getString("Description"));
+                product.setDiscount(rs.getInt("Discount"));
+                productInfo.add(product);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionDataBase.closeConnection(conn, callSt);
+        }
+        return productInfo;
+    }
+
+    // ==========================   get all salas  =========================== //
+    public List<Product> getAllSalad() {
+        Connection conn = null;
+        CallableStatement callSt = null;
+        List<Product> productInfo = null;
+        try {
+            conn = ConnectionDataBase.openConnection();
+            callSt = conn.prepareCall("{call 3pr_GetALLSalad()}");
+            ResultSet rs = callSt.executeQuery();
+            productInfo = new ArrayList<>();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setProductID(rs.getInt("ProductID"));
+                product.setCatalogID(rs.getString("CatalogName"));
+                product.setProductName(rs.getString("ProductName"));
+                product.setPrice(rs.getInt("ProductPrice"));
+                product.setProductStatus(rs.getBoolean("ProductStatus"));
+                product.setProductImg(rs.getString("ProductImg"));
+                product.setDescription(rs.getString("Description"));
+                product.setDiscount(rs.getInt("Discount"));
+                productInfo.add(product);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionDataBase.closeConnection(conn, callSt);
+        }
+        return productInfo;
+    }
+    // ==========================   get all drinks  =========================== //
+
+
+
+
+
+
+
+    public List<Product> getAllShort() {
+        Connection conn = null;
+        CallableStatement callSt = null;
+        List<Product> productInfo = null;
+        try {
+            conn = ConnectionDataBase.openConnection();
+            callSt = conn.prepareCall("{call 3pr_GetAllProduct()}");
+            ResultSet rs = callSt.executeQuery();
+            productInfo = new ArrayList<>();
+            while (rs.next()) {
+                Product product = new Product();
+                product.setProductID(rs.getInt("ProductID"));
+                product.setCatalogID(rs.getString("CatalogName"));
+                product.setProductName(rs.getString("ProductName"));
+                product.setPrice(rs.getInt("ProductPrice"));
+                product.setProductStatus(rs.getBoolean("ProductStatus"));
+                productInfo.add(product);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            ConnectionDataBase.closeConnection(conn, callSt);
+        }
+        return productInfo;
+    }
+
+    @Override
+    public boolean create(Product product) {
+        Connection conn = null;
+        CallableStatement callSt = null;
+
         boolean result = true;
         try {
             conn = ConnectionDataBase.openConnection();
-            callSt = conn.prepareCall("{call 3pr_InsertDrinks(?,?,?,?,?,?,?)}");
-            callSt.setInt(1, Integer.parseInt(drinks.getCatalogID()));
-            callSt.setString(2, drinks.getDrinksName());
-            callSt.setInt(3, drinks.getPrice());
-            callSt.setString(4, drinks.getTitle());
-            callSt.setBoolean(5, drinks.isDrinksStatus());
-            callSt.setString(6,drinks.getDrinksImg());
-            callSt.registerOutParameter(7, Types.INTEGER);
+            callSt = conn.prepareCall("{call 3pr_InsertProduct(?,?,?,?,?,?,?)}");
+            callSt.setInt(1, Integer.parseInt(product.getCatalogID()));
+            callSt.setString(2, product.getProductName());
+            callSt.setInt(3, product.getPrice());
+            callSt.setString(4, product.getDescription());
+            callSt.setBoolean(5, product.isProductStatus());
+            callSt.setString(6,product.getProductImg());
+            callSt.setInt(7, product.getDiscount());
             callSt.execute();
-            int drinksID = callSt.getInt(7);
-            for (String imgLinks : drinks.getListImgLinks()){
-                CallableStatement callSt2 = conn.prepareCall("{call 7pr_insert_Image(?,?) }");
-                callSt2.setString(1,imgLinks);
-                callSt2.setInt(2,drinksID);
-                callSt2.executeUpdate();
-                callSt2.close();
-            }
         } catch (Exception e) {
             result = false;
             e.printStackTrace();
@@ -185,29 +316,23 @@ public class DrinksDaoImp implements DrinksDao<Drinks,String> {
     }
 
     @Override
-    public boolean update(Drinks drinks) {
+    public boolean update(Product product) {
         Connection conn = null;
         CallableStatement callSt = null;
         boolean result = true;
         try {
             conn = ConnectionDataBase.openConnection();
-            callSt = conn.prepareCall("{call 3pr_UpdateDrinks(?,?,?,?,?,?,?)}");
-            callSt.setInt(1,drinks.getDrinksID());
-            callSt.setInt(2, Integer.parseInt(drinks.getCatalogID()));
-            callSt.setString(3, drinks.getDrinksName());
-            callSt.setInt(4, drinks.getPrice());
-            callSt.setString(5, drinks.getTitle());
-            callSt.setBoolean(6, drinks.isDrinksStatus());
-            callSt.setString(7,drinks.getDrinksImg());
+            callSt = conn.prepareCall("{call 3pr_UpdateProduct(?,?,?,?,?,?,?,?)}");
+            callSt.setInt(1,product.getProductID());
+            callSt.setInt(2, Integer.parseInt(product.getCatalogID()));
+            callSt.setString(3, product.getProductName());
+            callSt.setInt(4, product.getPrice());
+            callSt.setString(5, product.getDescription());
+            callSt.setBoolean(6, product.isProductStatus());
+            callSt.setString(7,product.getProductImg());
+            callSt.setInt(8,product.getDiscount());
             callSt.executeUpdate();
-            int drinksID = drinks.getDrinksID();
-            for (String imgLinks : drinks.getListImgLinks()){
-                CallableStatement callSt2 = conn.prepareCall("{call 7pr_updateImg(?,?) }");
-                callSt2.setString(1,imgLinks);
-                callSt2.setInt(2,drinksID);
-                callSt2.executeUpdate();
-                callSt2.close();
-            }
+
         } catch (Exception e) {
             result = false;
             e.printStackTrace();
@@ -223,7 +348,7 @@ public class DrinksDaoImp implements DrinksDao<Drinks,String> {
     }
 
     @Override
-    public Drinks getById(String id) {
+    public Product getById(String id) {
         return null;
     }
 }

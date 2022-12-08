@@ -3,15 +3,16 @@ package ra.Model.Entity;
 public class Catalog {
     private int catalogID;
     private String catalogName;
-    private String title;
+    private boolean catalogStatus;
 
     public Catalog() {
     }
 
-    public Catalog(int catalogID, String catalogName, String title) {
+    public Catalog(int catalogID, String catalogName,  boolean catalogStatus) {
         this.catalogID = catalogID;
         this.catalogName = catalogName;
-        this.title = title;
+
+        this.catalogStatus = catalogStatus;
     }
 
     public int getCatalogID() {
@@ -30,11 +31,11 @@ public class Catalog {
         this.catalogName = catalogName;
     }
 
-    public String getTitle() {
-        return title;
+    public boolean isCatalogStatus() {
+        return catalogStatus;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setCatalogStatus(boolean catalogStatus) {
+        this.catalogStatus = catalogStatus;
     }
 }

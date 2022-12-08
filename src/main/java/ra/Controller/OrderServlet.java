@@ -37,6 +37,10 @@ public class OrderServlet extends HttpServlet {
             request.setAttribute("order", orderList);
             request.getRequestDispatcher("View/Admin/Bill/billConfirm.jsp").forward(request, response);
             
+        }else if (action != null && action.equals("earning")) {
+            Integer earning = orderService.getEarning();
+            request.setAttribute("earning", earning);
+            request.getRequestDispatcher("View/Admin/Home.jsp").forward(request, response);
         } else {
             getAllProduct(request, response);
 

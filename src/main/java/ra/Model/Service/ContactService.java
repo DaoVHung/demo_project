@@ -1,0 +1,1 @@
+package ra.Model.Service;public interface ContactService {}
